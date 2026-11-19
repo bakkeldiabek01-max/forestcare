@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06190f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🌲%3C/text%3E%3C/svg%3E">
+<title>ForestCare — OYAN · Орман өрттерін ерте анықтау</title>
+<style>
+:root{
+  --bg:#05160d;--bg2:#0a2617;--card:#0e301e;--card2:#123b25;
+  --gold:#d4af37;--gold2:#f1d478;--white:#f4f7f2;--mut:#9fbba8;--line:#d4af3726;
+  --ok:#4fd884;--warn:#f2c94c;--orange:#ff9a3c;--red:#ff4d4d;
+  --r:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--white);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.lgimg{background:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBAYFBQUGBgYHCQ4JCQgICRINDQoOFRIWFhUSFBQXGiEcFxgfGRQUHScdHyIjJSUlFhwpLCgkKyEkJST/2wBDAQYGBgkICREJCREkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCT/wAARCADwAPADASIAAhEBAxEB/8QAHAAAAQUBAQEAAAAAAAAAAAAABwABBQYIBAID/8QARhAAAQMDAQUFBQUGAwcEAwAAAQIDBAAFEQYHEiExQRNRYXGBFCIykaEIQlJisRUjM3KCwUOishYkNERTkvAlVHPRY5Px/8QAGwEAAgMBAQEAAAAAAAAAAAAABQYAAwQBAgf/xAA2EQABBAEBBgMHBAICAwEAAAABAAIDBBEFEhMhMUFRImFxFCMykaGx0YHB4fAGQjNSFXLxgv/aAAwDAQACEQMRAD8ABgpqVP0riWE3rT5pYpYqKJYpYp6QqKJUsCnpAVFxNjxpU5GKQriiXOlyr7Ror819EaMy4+84cIbaQVKUfADiaI+ndgOqLwEO3FcWztK47r5LjuP5E8vUis89uGAZlcAr4assxxG3KGWetLjmr9qqy6C0W6u3tTLhqW6N8HA26liM0rqFKSCSfAHzIqA05pO762uKmbPbkpbB/eLBUGI4/Ms5PpxJ7q8stsczeHg3ueH8r2+o9rhGOLuw4r4aT0zM1ff4lnhJPaPr99eMhpsfEs+AH1wOtS20/QzmhNUPQkJcNvf/AH0J1fHfb/CT+JJ4H0PWtB6C0HaNmtkkPFwOSVNlyZOcG6SlIyQB91A5468z4e7lbrDte0dGeWla4spAejvJwHYznLI8RxBB4GgTtd9/tAe75fyjLdF9xsk+85/wsm44UqtustnV80FM3rhFTJgb+GpiEksu9wV1QfAkeBNdWm4WgtTOIhXR64aYmrO6iQl0PxFnx3xvI9VEeNHvambG8bxb3HFBBVftmN3B3Y8FSOdNiitqD7O+p7ahT1okw7yyBkJbV2TpHglRwfRVDK4W6Zapa4c+I/Eko+Jl5BQoeh6eNeoLUU3/ABuyvM1aWL/kbhctI0/KmNX5VCbpS40qRrq6lmlTU9RdTdaRPGnIpsYqKJZpqVLHCoolSpUqiifNPXmnFRRLNPmlypYri4lT17YYdlPNsR2nHnnFBCG0JKlLJ5AAczRj0RsPQjs5urclRG8m3NLwB/8AKsf6U+p6VjuX4ardqU/la6lKWy7ZjCF+ntK3rVL5ZtFvdkhPxu/C03/Ms+6PnUzp/Z1J1LfFWy2T2ZTUbHts9pBMdjwQo4Lh4HGAAenAZq+bVdSOtORNnumG0MKklCHm443AkL+FoAcs81eGO80SdH6ci6SsUe0wsbrYy47u4LzhHvLPn07gAKB29alZCJcYLvhHl3P7BG62jROlMec7PxHz7D8p9GaOsGjIYZtUcB9YAcmO4Lz3mroPyjAqgbbNpUiz50xZn1MyXkBct9BwppCuSEkciocSeYHnRRfYXkY3SemP0oLTthuptQXGZdrndrXGky3lOrby45u5PAZAxwGB6UF0ySOWwZrj+Xfqf4RfUI5IoBFUbz7dAqtsn0E3re+rbmb6LZCSlyRuHBcJJ3WwemcEk8wAeprTdvt8O2R2YVujMRozI3UNMpCUp9B+vOgCdAbStnTLs2xyVSI2Q47+zl9pvYB4qaUMnAzyBq27M9tDN8lNWjUKWoc5w7rMhPBp9X4SD8Cu7ofDlRHV45rXvoXB0Y6A8vULBpboq/upQWyHv19CoTbBtWTekPaZsinUxErKJr6klBeIP8NIPEJBHEnny5c4bZRtQOiJC4FyS69ZpCt5QRxXGWea0jqD1HqOPAkXbXs7bvlpd1Hb2N25QUb8jdTxksjnnvUkcQeeAR3VA7Cdm7FxQNV3eOh1ltZTBZWMpWpJ4ukdQDwT4gnoK1wvp/8AjzkcOo65WKdtwagMHj07YRsjqh3a3pdHZyoktoKCXEZS4gjhlKhyx3is97bdmUHSjrF7srQZt0tzsnowOUx3CCRu/lUAeHQjuIom7Tdr9v0OfYISEXC9KTvFgq9xgHkpw8+PRI4nwFC1m3bUdr7BW844LU4sLBexHikg5BSMZXjvGfOsmkxTQnfk7Mfn1WvVJIZW7kDaf5dFI7D9qT9unx9KXqQXIEhQbhPOK/4ZZ5Nk/gVyHccdDwN2p9H2PWEIwr1AbkJGdxz4XWT3oXzT+neKBy/s1ajQyFt320duBkJAdGD4K3frij1Yzcv2NBF4S2LilhKZXZq3klwDBIPUHGfWvGpvhEonrO4nnhe9ObM6MxWW/NZh19sokaFurYlTSbJJVuMXIslQbV0Q6lPFJ8RnI4gcCKr2otD33TLLcqdD34LyQpqdGUHYzqTyIcHDj44NbBvVnhagtcm1XJgPRJKNxaOuOhB6KB4g9CKCGg73L2eaymbONQOCRbH3tyKt4ApBXxRwPDccBGRyCvM1vqatLJGXYy5vMdx3HmsVnS4myBucB3I9j2KB5FMRWhde7A4NzQ5O0sEW+YcqMJZww7/If8M/5fKgJcrbNs856BcIzsWUwrdcadThST/9ePI0Yp34rTcxnj26oTboy1jh44d1y4pGnNNW5ZE1I09NmoompE05ryeVRRPilinwOlKoolT03KlUUT867LTaZt8uDFut0dUiU+rdQ2n6knkAOZJ4CvjBhSLjLZhxGVvyH1httpAyVqPICtK7O9ARtEWwhYQ/dHwPapI6dezQfwj6nj3YFapqbKUeebjyCJabpzrcmOTRzK8bPNnFv0TH7ZwIl3dacOyiOCM/cbHRPeeZ8Bwqx3+6R7DaJV1kLCGYrZdV446DxJwB5187/quwaXjl283NiKSMpZJ3nXPJA940A9pG1CTrl1EOK0uHaGVbyGlH331DkteOHDokcufPko1adnUpt5Ly6n9h/Ca7Fuvp8OxHz6D8qQ2Qb+pdpj14uJ35CW35is8cOKISPlv8PKtAEp5AcOVZw2MXZu2a7jNuK3UzmlxQfznCk/Mpx61pFLaUJBcOQfHjVn+RNLbIHQAYVegvDqxd1JOVTtcbVbToo+xFDk25KAUYzJACEnkpajwTnoOJNU+3faHa9oSm4adcTHzxVHkha8eSkgH51Q9o1hvUTWV6fmRJa0uvuSUvhpRQpkn3Vb2MYAwPDGKqVG6Wh1HQNLvESOeUFua1aZMQ3gAeWFs3S+p7Tqe1t3OzykSGCd0gDdW2v8KhzSf/AAULNvOzOM/b3tX2iOll9kg3BpsYDqCcdqAOSgSMnqOPMcaNsQ1HIsmvIcNKz7NdD7K83ngTglCvMEY8ia0/NisXG3yLe8AtmUytlYPHIUkpP60LkjdplsbB8P3CJRyN1CsS4eL91Q9iOt16z0ouHcV9tcbbiM+pXEvNEe4s95Iyk+I8ak9baghbLNAA29ptCmG0w7ewriCsg4z3gAFR8vGgr9n64OWvaC5A3iUyorzKx0KkHeB/yn51L/aUu7r12s1sCj2LMdyUU961K3f0SfnWiSk03xAPhPiwqWW3exGY/EOC+GxfZyNa3GTqjUQXMhtvnCXePtkjmpS+9KcjI6k45A1oG7XSDYLa5PnyGYkOMj33FnCUDkAB9AB6VCbNYLVp0FYobQAxDbdWQOa1jfUT6qoPfaM1LImaiiafQopiQWUyFozwW6vOCfJIGPM1U7a1C3us4aPoAvbdmhV3pGXH6kqau/2k4jMpSLPYHpTIPB6U/wBkVeISASPWp7RO3q0aons2yfDctMx5QQzvuBxp1R+7vYBB7sjj31mkk132yyXe7vMNWyBLfdeXusqbaUQVA/iAwMHBJzwoxLotURkDge+UHi1m06QE8R2wtp7+9xycnkKAv2lrWmPcbFeGjuPOtuR1KHPKCFIPpvGjcw4tEdtDqwt1KUpUr8SsDJ9TmgT9pC9syrpaLQ2sKcitLkOgfdK8BI+SSfWl/RSfbGgceefRH9XA9kcT5IrbO9WJ1fpGBdFLC5JT2UpI5peTwV8+Cv6q59oGzy1a9twRJAjz2QRHmpGVN/lI+8jw6cxg1nzZztEmaAua3Etqk2+TgSYwOCcclp6BQ+RHDurR+m9Z2LVzCXrRcmZLmAVsZ3HWz+Zs8R+njXq9Tmoz72L4eh7eRUpW4bsO7k59Qspai07cdLXV613RgsyG+II4pcT0Wk9Unv8AQ8aizWtNoehIGvLKqO/usTmQVRJO7xbV+E96DwyPXmKyrdbZLs1xkW6eypiVGWW3Gz0I/UHmD1BFM2l6k22zjwcOY/dLmpac6q/I+E8vwuWlimp80VQxeTTGvRpjUXU/KlSpCoonzSHGmqw6Js0K6XVcq7udjZraj2qc4eqAcJbHepasJA86rlkEbC49FZFGZHho6onbJtKwtJ2Res9QONRVutksLe4COwfvfzL6dcY76h9W7Y7zqOS7btIR5ESOkKUqQlGZDiBzV3Npx15+IrsjWm/bbrmm5XBTtn0rHXux2UDivHD3RyKuhWfdTyGasGv9O2/T+koFis7At1tuN0iw5jjf8RbSlcd9fM5IA48KUi+H2kOs+KQnl0aP3Kamsk9n2K/hYOvV3p5eaEemNn2pdbuOTIUZS2lKIcnSnN1CldfeOSs+WauKPs83pTW9+27WF9R2buM+eP7VddQ7WdK6PWm1QUrmKijshFhpG4wBwCCskAY7hk9/GuSybeNPXSYiNPjy7ShZ3Q69urbHmpPFI8cYr3LqGpPG8gjwzpw6KuOhQadiaTL/AFQvv+y3Vul0GaqGZEdk7/tUBfadmRxCiAApOOecetXbS/2gGUwm42poT630AAzIiQoO+KkZGD3kZHlRyZDbaEuIIKcZSUnmO/NCzaTsah6mQ7dNPMswbrxUphOEtSz5ckL8eR699ZmalBdxFebg9COCvdp81PMlM5HUFU/aNtsTqmzu2GzRZDEOQR277+EqWkEHcSkE4BIGSfKqVJ0ReoGlWtTzGW49vfcQ2z2iv3ju9nCgkDgngeJxnpmoCXFkQn34kllxmQ0VNuNOJ3VIUOBBB5Gtgacetep9KwHWm2JMGTFbHZLQFo4JAKCk8PdIxjpiitmVulRMbA3LSeP97lDIInalI8zOwQOCAew/TEq+a2i3JDavY7Ur2h53Hu7+CEIz3knOO4GtGXq7s2GzTbnIWEsxGFvKJP4RwHqcD1pnXbNpW1qU85AtVvZ4591lpJPgMDJ+ZoJ671pcNrNwTpXRcSRIgoUHJD6huB/B4KVn4GgeOTxJ6dCHkc/U7AkxssHM9h6orExmnQFmcuPLzKitgFseuWtn7moEIhRXFrVj77p3QP8AWfSpf7RlqdEyz3cpJaW0uGtXcoHfT8wVfKrvZ4Fn2L6GedkyEuun96+6BgyZBGEoSO7oPDJPM1z2a4WvbJoNyJOKW5ZQlMpDfxRHxxSsDqOo7wSKuddJuC60e7b4cqtlIeyeyOPvD4sKb2Y39F40NZpCVAluOmM4AeIW37pH0B9aGv2g9LymrtG1M00pUSQymO+sDIacTnd3u4KSeB7xiozTl1vmxK/uQNQwnnrNMVkLY95CiOHatnrwxvIODy6gUerJerLqm3l23zYdxiuJw4hBCsA9FoPEeRFUneULXtDBtRnkemCrCGXqu4ecPHPvkLK+ndEXrVkC4y7Ow3K/ZwSp5kLw4oKBPuDko+6eGc+FWHZntYf0G09bpMZyZa33O1KWlYcaWQASAeBBAGQccq0tHhWrTcFxTEWJbobeX3exbS0hIAyVHAHQVjC6Smplzmy2Uhtl+Q66hPLdSpZI+hFG61lupiSORvh4Y/vdBbFc6aWSRu8XXsjTfftD29MZSbHapbkojCVy8NtoPeQCSry4edDy06G1ptImv3duG7IMpZW5PkkNNKPgTzA5YSDgCiFsn2JocaY1BqqLvhYDkW3ODhjmFujx5hHqe6jiAndCUYSEjdShI4ADkAKHPt19PcY6jcu6koiytYvtD7TsN7D7rOY+zjqXst5V2tAcx8GXcfPcqn6m2dap0MpE6dEU20hQ3J0R3eQg9PeTgoPnijbqnbzp2xTXIUNuTd3mlFDio26lpJHMBavix4DHjXJaNuWk7+tUO5x37YHklvExKVsLB4bqlDgAfEYq6O/qIG8kiy30Vb6NAndskw71VK0ntpvmnnWIGq25E2G4hK0SVp/3hLZ5K7nU+PPxPKrDtY0zB15pxvWGnltSnYrWVLZ4+0MDmP5kc8c8ZHdUxofSFnvEDU+lrhGbuFmtl0KIK1KythLjYcKW1jiN0kcj1486qtz05qLYfdFXa0uO3bTDyx7QyocUA8BvjkFdAscDyOM1WTEbG3X8Eg6dHDt5FWgSbnd2PEw9erf480F/GnJqw63tcCFdUTrOrfs9zQZUMjhuDOFtEdFIVkY6DFV2mqKQSMDwliWMxvLCnryafNMcmrFWlT0gMUqiiWM0R9lOh3tZncnb7On40gPSAkkGa8BhLee5KScnpvHqrhSdPWOVqS9RLTCH76U4EBR5IHNSj4AAn0rVlntMPT1oi2i3tdnGjN7iSeaz1UfEnJPiaXte1L2aMMZ8R+nmjuiaf7Q8vd8I+qlG47MVhtllttplCAlDaE4ShIGAkAchWedrO0mddrnP05AWli1RnSw77oK5Kkq4kk8khQ4AceGaPbhVyUfd6eFU2/bFdM6hubl1fdnwn5Ci48iMtIQ4rqcKScE9cfKlfSLNeKcyWRnt14pj1SCeSER1zjv04LNfKlmintXa0vpWyRtJWGM2mWt9MuY6Vdo6AlKgkLUep3jwGAAOXGh5YrI7e5qWBJiw2BgvS5TgQ0wnvJPM9yRxJ5U+V7TZot9jA8/ukueo6KXc5yfJaN2LTpdw2cwVylqV2Djsdsq6toVhPyzj0q/MNhJA5nmaF1u2o7P9HWiJZrbcn5TENsISqPGWvtDzKicAZJJJ86+zP2g9HKISsXhv85iZH0VmkaxSsTTPkjiOCSRwTnDbhjibG+QZA7qU2p7J4euo5mwezi3xpGEPEYRIA5Ic/srp1yKC2jtdag2UXiRa5sR1cZLmJVtfO6pCvxIPQkeiuHnR7s21zRF6UluLf4yHjwDckFlRP9YA+teddbOrTtFgpL4DE1tP+7T2xlSR+FX40eHqMVuq3TE32W607B7jiFjsVNt3tFR2HfQr6WLVelNpVncaZVGmtLGH4MtsFbf8yD+o9DQk2jbJ5ujXF6l0hJloisntHG23D20MfiSrmpA654jrkcRQ7/p3UWzjUCG5JdgzGyVRpcdR3HU/iQrqO8HlyIoz7K9sLOqFt2W/dkxdiN1pwABuZw5Y5BeOnI9O6tTqstH39Y7cR5jy/vVZ2WIrnuZxsyDkfNfHZptCY2i22TprUjbTs/sVJVlICZbXVWOixwJx4EV1ap1Fb9i+kYNotDbbtxWkpZSsZ31fffcxz49OpwOQoebQ9Pu7LdoEG8WhHZwnnRMipHJGFYca8sHh+VQ7q89g7tn2tLQh10W5bhwscOxht93cT+q66KET3iZpxCRtEeY6LybsjGmNw98Dsg+R6rp0Hs8v21i5LvuoLhKTbN8hyUs5W+oc0NJ5ADkTjA5YJo6K/wBjtlliyRCs8JPUDLj6h81OK+fpVX2ibUrTsyiN2CxRmHri00lDURP8KGjHuleOOeoTzPMkZ451vd+u2qbkqfdpj06W4d1JV93J4JQkcAO4CrGVptQO0/wRDkO6rfPFR4N8Uh5lXvajtnm65Qu121pdusmcrSo/vZWOXaY4JT13R6npVr2ObHCSxqbU0fGMOQoDqeJPMOuA9OqUnzPQV1bLdjkWwNM6j1gloSk4cYhvkBuN3LczwK/y8k9cnlerrtc0PalKTI1JBccTzQwVPK/yA1XathjPZaLfUj+/Ve61Vz3CzcPoCrepZGcnJPOqdtVuMq1bPr3KgrUh9McJC0HBQFKCFEeQUahXftB6GBwmTcl5PNMJWPrivnJ2xbPNQwpFumXRTbEtpTLiJMZxsFJGDxwQKEx1J2Pa90ZwCDyKKPswvaWNeMkdws043fd6Dhjur0GHVMLfDSyyhQQpwJO6lSs4BPLJweHgaldS6e/YMs+zT4t0t7hPs82M4FpcT0CsfCvHNJ8xkUTdh4sWpdN3vR92YaeU68mX2ajuqWjdCd5JHEKQRzHLe86dbNxsMO+AyOHySdXpulm3Ljg/37qsbLdqNw0dPjWt9aXrI++A40UDeZUsgFxJHE9Mg54DpWmn0NupcYfQh1CwULQsBSVJPAgg8waHlo2CaStd2auBfuUwMrDjceQ4nswoHI3sJBUAccPnmr+4rdyU+aiaTNXs15pBJX/VN+lV54ozHP8Aos47WtBO6MJNuSpdglSO2abUSTBfIwUA/hUBw790A8UjI0rYt3s0LUVsk2+4tlyNIQW1g8/AjuIPEHvArJupbBK0vfZlomcXYy90LxgOIPFKx4EYNMOhaj7Qwxv+IfUIFrVDcPEjPhP0UZTE09MRwpgQJPTU5ryVboKjyHGuFdCNWwHTgbjT9RvN++tXskcnokYLhHmd1PoaKtwuMaBGXJmSWo8dvipx5QSlPrVSjXS37MdndtNxBCm46AlhP8R99Y3ykeqjk9AKGsKz6s2z3JU6W6IdpacICiD2LX5W0/fX3n5kcqQZq5vWH2ZXbMYOMny6BPMUzaUDK8bdp5GcDz7q26h282iGpTNlgvXNWf47h7FrPhkbyvkKhXtR7XtbMq/Z9vlQIjgxmKwI6SP/AJHDvH0NEnSOzrT+kwhyJBS/LHAypQDjqvEZGE/0gedT9w1Darc4BcLpBjOdBIkJSfkTmvAuVIjs1Ido93cfovRrWZRmxLsjs38rPZ2Ia6cCnVwIylqO8renNlSj3k54n1qGumz/AFTp0iRdNOSjHbOVK3S40R4qbPD5itSWy8Wy7qCYFyhy8cSGH0rOPIHNSLZ97hlPjyrU3/I7DDiRg9OIWV2gwOGWOOf0KzdpHXOz9hTcfUGgIKUHh7ZHWt/HipC1E/Inyo0W/QOzHVNrbn26x2aXEdHuvRt5GD3e6QQfA8a49c7H9P6wbckMNt2y6kZTKYRhLh//ACIHBXmMK8+VA+1XXU+xjVq2XmlIUkp9piFWWZjXRSTyPD4VcweB6itgLbzS+q8teP8AUlZiHVHBtlgLD1A+6LeoPs5abuTSlWaXLtb2PdQ6rt2SfEK94ehobOStf7ELm3FcfUYLisobUouw5IHPdJ4pPgMEdxrR1i1BB1JZ4t1tzvaRpSA4hR4FPekjoQcgjwr5alsNv1bZpNnubQcjvp+IfE0oclpPRQ5j5cjWCHVXtO5tjabyOeYWyXTWkbysdl3THJUiy6g0rtv05Itc5osTkJ31xlEdrGXyDrSuo8fRQrPup9Oz9HahkWmad2RFWCh1vIC080OJPTIwfA+VenU3bQOrHUMvFi52qSpAcTyJB+qVDp1Bog7a7hB1Xp3SGroiEtuTWno7qRzSU4JSf5VFY8jR6rCakwZGcxP5eR5/IoNZlFqIveMSM5+YS1vqca42OWi6zVBV0gXMQ319VqLSsq/qSEnzBqv7PtbNaCsWobhGCF3uWGYcNKhkNp95S3D4Jwnh1OKrthgXvUZb05aWHJRef9p7FPABQSU76jySkAnieAzWgdAbCrLpxDcy9pau9zGFDfH+7snuSk/GfzK9AK5YdXpwmKQ8CcgDtnOPRSATW5RKwchgnz/KAlv0lqbUjci6t2+ZIYyp5+4SSG2j1UtTqyAfPNcVlvcvTdxFxt5jiWzkNPONhwNK/GkHhvdxIOM551f9tm01erLkqwWt7Fkgr3FFBwJTqev8iTwSOWcnuqf2KbI2ZrLGqdRxg6yo78GG4MpWOjqx1H4UngeZ4Yq83N3X3thuAeQVPshfY3cByRzKhdObMtcbVA3dL9dJTNvc95EiepS1ODvba4DHicDuzV+VsV2e6Os0i5Xz22YxFbLjrz75QOHQIbxzPADJ4miqpYSBk8fHpQv+0E4+vZ+oNZ7IzWO2x+HKsf5t2l5mozWZmwsOw0nkOCOOoRQROleNogZ4oCalu1nuc9S7Lp5mzwwr3G+2cccWPzlSiAfBI4d5ogaE2eaK2j2p0wZ11tF2jAe0RVuIfSM8lpykEoPnkHge+hMOVTuh9Uu6O1VAvKCrs2nAiQkH+IyrgsfLj5gU02oH7kiFxDhy48/XKWq0zDN75oIPPyVo1ZsJ1RpppyZDQ3eIiBlTkRJDqR3qbPH/ALSaoEGfLtcxmbBkuxZTCt5t1s4Ug/8AnStvCQ2tCVtK3kqAUhSeoPEGhftV2OxdWNvXeyMNxr2BvqQMJRN8FDkF9yuvI94C0tcDjurI59fyi9vRtkb2ueXT8Km2D7Rk2Owli/2hMsjgZMJYbUfEoPu58iKsqftD6TcQCuHekY5p7BBz8l1nl5l2O84y82tp1tRQtCxhSFA4II6EGvpClJhy2pC4seUltQJYfBKHB1ScYPqOIrdLodSTxBuPQrJFrVpngcR+oWmrBth0hqOWiG1OciSXDuttzWuy3j3BWSnPhmqd9oXTAchQdSMpHaMr9kkEDmhWSgnyVkf1CuaXsh09rPTUe/6NfchOSG98Q5LhcaKhwUgqPFBBBGeI4dK4dN3+43qyXrZxqUOpuSIziYZf4ub7Y3w2T1I3QUnqPSg0MEUMosVSfCcOaeYHIovLLJNEYLIHiHhI5EoSmm6UknIBxzFImnNKGMJzXZZIX7SvVug8MSJTTRz3KWAfpXHX0jOPtSW1xt4PhQDe7z3jwGPHjXmQZacL1GcOBRYchu7ZNfSZS1uI01alllvcOO0Tn4U9ylkZJ6JA8KMsONGt8VEdlDMaNHQEpbSAlDSAPoBUJovTjGktORLU0kdo0jfeUP8AEdON4/PgPACq/tqvy7Vor2Vhe67c3hGJB4hsAqX8wAPI185mkN2wyrCcMBwP3Pqn+JgqQOsS8XEZP4VH2hbZLhepLtu07JchWxGUGQ0d12V4g80o7gOJ691DNQ31FaxvLPEqVxJ8yeNIU/A0+1acVZgZEMfuke1clsPLpCk0Sw4l1oltxJylaDuqSfAjjRe2Y7bJcKYzadUyDJhuENtT3P4jBPAdofvI8eY8RQh868kDkeIPSpbpxWWbEg/XspVuS13hzD+ndbhASTlOT3EVTdqmg2dc6ccbaaT+1YaVOwneRKsZLZ/KrGPA4NR2xXVLt+0OwiS6Vybc4YS1K5qSACgnvO6QPSr525JyOY5Gvnxc+lYIB8TSnoNZbgyeIcECfs7aoVGuM7S8tZDb6VSo6VHBS4n+In1HHHek0fWkpzvAZJ6VmHXxOz/bE7cYTe62iQ1cUIHIpcGXE+p7QetaehyGJUZiVGWFx3kJdbUPvJUMg/I0R1iIOe2ywcHjP6rDpcpDHV3c2HH6LL23llLW0yeUjBcYjrX4qLYB/QVXLNFvGsP2TpS3tdsW33nGU5wElzdK1KPRICMk+dXb7Rdpdia4YuO4exuENBSo9Vt5QofLdPrV8+z9o5uzabOopLYMy6j90SOLccHgB3bxBUfAJo97WyCgyU8TgY9eSCiq+a8+McBnj6K46E0Da9BWcQoSQ7JdAMqYpOFvq/skdE9PPjVb2468OltNi2wXty5XMKbbKT7zTXJa/A8d0eJ8KvV2usa0QJE6a+lmJHbLjrh5JSKyHrLVMrWeopV4k7yQ4dxhon+C0PhT/c+JNBdLrvu2DNLxA4n16BFtRnbTriOPgTwH5Xfsv0anWerItveSRAZHtEsj/pJPw/1HCfU1rbtkNIShtKW0ITgJAwEgcAAO4DpQt2DaYNo0kbs8gJk3ZfaAkcQwnIQPU7yvUVddUahjaW09cLu8UL9kaK0pJ+NfJCfVRAqvWLTrFndM5DgPVWaVWbBX3j+Z4n0XDa9dxrpru66XQU70GO24F54rcz+8T/SFI+tS1/scbUlmnWicFCNLbKCocSg8woeIIB9Kyvo7Vkiwa2h6ikuKWoyCqWr8aHCQ5+pPoK181uvJS4lSVJIBCk8iO/5VXqVI0pWFnYcfMc17oXBbjeHd/p0WM9S6en6UvUm0XJvckR1fEPhcSfhWn8pHEfLpUYQDz5Vqfa/s8RrewF6G0DeYCVLjKA4vJ5qaPnzHcrzNZXOQcEEeBGKbtNvC3FtdRzSrqFI1pcdDyWttlF3VedndklrVvutMezLJP3myUfoBVrLoI5Y8KFf2dJnbaJmRlHPs1wXgdwUhCv1zRMdKs9/kKR9RZu7D2junOg/eQMceyEm27ZqLs07qizM5nNI3pjKBxkIH+IB+NI594HeOIByOfPxraje8V56D4SO+gFtn2X/sCQ5qSzMj9mPqzKZQOEVwn4gPwKP/AGk45EUe0LVc4ryn0P7fhBNa0zGZ4h6j91J/Z1vu8LrYHl5SndmsJJ5Z9xY+e4amdtOnCI8PWFpHZ3SzuIccUjhvshXAnv3T/lJHShhscnGBtCtyc4TJS7HV47yCR9UitFS2GprLsaUO0ZeQW1p6FChg/Q1j1V5p3xK3kcE+nIrZpbPaqO7dzHAfssiSXEOyHnEI7NC3FKSj8IJJA9K+Rrsu1tcs11mW1744jy2T47pIz6jB9a4zTqwgtBbySfICHEO5pzVl2a29Fz1zaGXBlCHS+oH8iSofUCq1zq37J30Ma7gdod0LQ62D4lB/+qzag4trSFvPB+y00Gh1mMHuFo0LAAGcmhvt2trszTEKa0CpMGVl3H3UrTu73lkAetX5LnDeBG7yxXtbLEuO5GksNusuoKHG3BvJWkjBBHdXzKlZ9mnbNjkvolyvv4XRZ5rJdOKPD+w3TL03tWpdyYZJyY6FpUAO4KIJHrmgvqCA1ar9coDKlKaiynWUFRyd1KiBnxxX0alqsFwlsJ4jjyXz+7pk9QB0o4Hgo/FLFKlnHE0RQ4I4/Z2aWbVfFHPZ+1NAefZnP9qL+Ck7qeA76p2x7TqtPaFiCQjclTlKmOpI4pC8bgP9AT86uwHDl9K+aarI2S29zeWfsvommRmOsxruyzx9oQIGtYe78f7PbKv/ANi8URPs+6pN40i5aJLm+/aXA2jJ4llWSj5HeT6ChBthvCLztCua2lbzUTchpI69mPe/zFVT/wBnaW4xrWZHST2b9vWVDxStJB+p+dM9itnSmh3NoB/v6JehsY1J2OTjhGvaFomFr6wLtkpZYfQrtY0lKcllzGM46pI4Ed3iBUzAitWy2xYEdIS1FZQykDoEpCf7V7U6Qo8zUFrbUg0rpa43lOO0jMnsgerp91A/7iKVGyyShsAPDPD9UzGNkZMxHHHH9EHtvGu1XCd/srBezFiqC5qkng47zCPJPM+PlQ003Y3tSX6BZ2CQuW8Gyr8CealeiQT6VHuOOPOLddcU46tRWtajkqUTkk+Zow/Z900XJE/Uj6PdaHskYkfeOC4oem6n+o08PDNNpEN5gfMlJzS7ULg2uRPyARsYZZixWYrCOzjsNpaaQPupSMAfIChZtlRetUSrfpHT8CRNWD7ZL7Ie6gcQ2FqOAkfEriegoqKXvqG7XxuN3g2KEubcZbESOnip11W6nOPqfDnSRTsGKYS7O0enqnG1AJITHnA6+iCln+zjd5TSV3W8woRUOLTLan1DwJykfLNGzS1rk6esMKzvTzPVDbDIkqb3FKQPhBGTxAwM544oaXn7RFihrLdrt065EcO1JDDZ8s5V9BXTovbxG1RfItmlWVyA9LV2bLqHg6gqwSAoYBGcc6L3G6jZj25meEceg/lC6nsNd+xE7ieHP+hFtLu4OfHoetZg256TRpzWS5sVARDuyTJQAMBLucOJHqQr+qtIKkbp5c6Gu3W1/tbRipiEZdtr6H89QhXuL/VJ9KzaNc3VprejuCv1apva7j1HFRX2a5ITb9Qsk/C+w5jzSof2oj64W87o+9GO6408mE6tCm1EKSpKSoEEcjkUI/s6vbs2/s/eLTCwPJSx/ejHcWXJsGTEI/jMONH+pJH969audjUCfMH7LmlDapN9CqXss2otayiJt1zWhu9R0byvuplIH30j8X4k+o4crzLW3LacYebQ8w6goW2sZStJGCCO7FY8iSZNsksyYrzkeVGUFNuoOFIUOtaP2e6+Z1tZilSUM3OOAmU0nke5afyn6Hh3VdrWlGud/D8J+n8KvSNSFgbmX4h9UPp+gnND7R7DMhb6rRIuLSWlk5LKirHZq9M4PUeIozuDdGfDh0ry8yysBD7aHfeSsBQyApJyk+YIB9K+yllWVEYzQm5efaDC/m0Yz3RSpTbWLtjkTnHZZw2uRfZde3BWN3t0tP48VIGfqDVOq+7bFA66c7xDYz/mqhHlX0LTXF1WMnsEh6k0NtSAdynrottwdtVxiz2P4sZ1LqfHB5evL1rnr2w6hh9p1xsOttrSpaDyUkHJHqMitcgDmkHkssZIcCOa0/ZLpFv1pYuMJe/GfTlPek9UnxByKk95XL1rP8mffdlOon49rlb8CQBIYS8nfZksqGUKx0UB7pIwcippW3q6qY3U2OAHfxl9ZTnv3cfTNIE3+PTl21Ww5h5ccJ6i1yADZn8LhzRU1HqGPpWyv3WWfcbHuJzxW591A8Sf71mGRJdmSHZL6t515xTqz3qUcn6mpHUWqbvqqUmRdpZe7PIaaSN1toH8KR+vOolNM+jaV7Ewl5y480taxqftjw1g8ITnhV/2UbPHNV3NFynsn9jxHMr3v+ZcH+GO8ct493Dma69CbH5d4W3P1Al2FA4KRGPuvyB5fcT4nieg60cITDEGO1Eistxo7CdxppobqUJHQCsOsa4yJphgOXHr2/la9J0V0jhNOMN7d1KdpnAHDhy7qru0PWrWitMvTSpPtzqS1DaP33SOeO5I94+XjXLq3Xto0XHK7g+VyVDLcRoguu+nQfmPDzrO+rdXXLWd2VcbksDA3GGEH3GEZzup/uepoLo+kyWniSQYYPqjOq6kyszYYcvP0UMpS1qUtaytaiVKUeaiTkk+tGX7OtldEi7X9acNJQmE0SPiUSFrx5AIHrQv0xpi46uu7Nrtre86vitwj3GUdVqPcPqeArVFg0/C0xZolngJyxHT8R4FxWcqWrxJ40f/AMgutih3Dfid9kB0Km6Wbfu5D7qUKyTwHE8cUMPtBzSxouHFCsGVPRlPeEJUr9cUTd/Bxnn0FZz226wZ1HqVq3QnA5DtaVNlaTlK3lH3yPAYCfQ0u6HXdLbaRybxKP6xOIqrgeZ4KgQ4j9wlsxIrZdkPuJaaQOalE4A+da00rYGdL2GDZ2iFJitgKWP8RZ4rV6qJ+lCzYboNxtSdW3Bop4FNvbUnic8FPfLKU+ZPdV+11tBtWh4W9KWH5rgzHhoPvr8T+FPifTNEtcsutTCpBxx9/wCFg0asK0Rsy8M/ZdWuNcWvQ1q9smEPSHcpjREKwt5X9kjqr+9Zp1Rqy7avn+23WSXCCeyYTwaYHchPTz5nrXxv+oLnq28LuNxcL8l4hCEIB3UJ6IQnuH151P2jZHrK7tpdRaTEbUMhU1xLJI790+99KK0KEGns25iNs9T+yG3rs95+xCDsjt19VWLZa5d4mIhwWe2fc+FO8lI8yVEADxJo+bLtkLemJDd8uchqZc0pPYIjq3mY+Rgne+8rBIzyGTjPOh+5sE1ZukdpZ1n8HtJ/ujFRzuzjaDpU+0RINxbCPe7S2SN8D0Qc/Su3J2W2bqGdoz9fqvNOF1V28mhJwtMuAAk559B0riuttZu9ql22RwamNLZV4BQxn0zn0oAWXbbq+xvez3Mt3VDZwtuYjs3h/WACD/MDRQ0vth0xqfcjOvKtU1XAMSyAFnuS4PdPrg0r2NHtVjt4yBxyOP8AKZYNTrWPBnBPQodbFHnbBtBmWWZ+7edYdjLB/wCo2oKx67qqPK3t0jdBwOnjQe2vabl2G+RNc2YEFlxtUrHJLieCXD+VQ90+OO+iFpzU0PVlmYusJwbrvurZB95lY5oV4j9MGrdW9+GXGciMHyIVeljcl1V3MHI8wVnjX1kNg1hc4YThlTxfZPe2s7w+WSPSuLTuoJul7xHusBWHWThSScJdQfiQrwI/selHDafoJWrLU3LgJBusMHsk/wDuEcy3nv6p8cjrWfloW2tTbiFIWglKkqGCkjmCOh8KadMtx3a2y7iQMEf3ulnUa0lOztt4DOQVq2zXmFfbXEu0Re9HlICkb3xA9UnxBBB8q+y5G9y6+lB7YbqJTcqZp55fuPJMqNk/CofGkeYwf6TRYkAIBWvgge8cnkBSPqNM1bDounT0KddPtCzA2Xr19VnzanLEvXl0IVkNFtkH+VAz9c1VDyrru043O6zZx/5mQ46PIqJH0xXIeVfSKke7gYzsAvntyTeTvf3JTiljPPlSpGr1nRssdli7T9mEONIdS1crZvR2JBGezUnAAVj7ik7ufLI5UHrtaZtinvW+4x1R5LRwpCvoQeoPQjgavuxDUIt9/es7qsNXBO82CeAdSP7pz8hRY1XpW06qgGPcowdW2k9g8k7rjajy3Vd2eYPDwpSN92m23QSDMZ4jyymr2Fuo1WzRnDxwPnhZsstnm3+5MW63s9tJfOEpzgADmonokDiTRw0zobTmgGE3G5PR35jYClTpRCW2j3NpPw+Zyo+HKhzs71JC0VHv8+azm7NttsMR1e6VHeVvp8AFJG8e4VMWzQuotozn+0Oq7mbfbiC6jtBghvnltB4IRj7yuJ58a06o+SVxY9+xEMZPVxPHAWfTY44mh4ZtyHp0HqrPedtunYK1C3pl3NwHOW0bjZP86uJ9Aao982z6kuYLcER7QyRjLA33cfzq5egFRN9vWnYjq4elrO12CDum5XAdu+94pSr3EDu93PlVZUpS1FSjvE8zV1LRqrAHmPP/ALc/lyVN3WLLiWB4H/r+V6dddlyFOvuqdfeV7zjq8qWfFRP61f8ASexu6X3ckT5sODEPE9k8h95Q8EpJSPMn0qjQrjKgL34z6m+9JSFJPmlQIPqKt+n9T6RnuJjar03CjKWcftK2IUwoeK0NkfNPyrbeM7Y/cfQZPyyFkotgfJ788fM4Hz4o6ae05adIwBBtUYR0k7y1qOVvH8S1dT8gOgFeLrtB09p/P7TvERCh/hIX2i/RKcmqHN2NaenxkSbddrilh5O+0pEgPtqHQgnmPWuGFsDgTCpDOo3WXk8VtLhpJx3ghYyKTGQ05Xl9ic56+E5/dN0klmNgbBCMdOIx+yjtd7bJd7bdgaebegRHAULkuHD7ieoSB8APz8qq+j4mkoq0XHVNxU402cotkVlbjjxH/UUAAlPhnJ8OpIj/AGd7YFj2nUE9wdUtRkJP1JqQVsH0q0jcL93Wo8liQjh6bmKNM1DToIt1C4gHmQOPzKDupX55N7K0HHIE8Poqtqjb5OmNey6at6bYyE7gfeCVOAAYG6ge6nh54ocQ4ly1Rem47ZenXGc4EhTiipS1HqpR6AZJPIAVcdf7JJWk4xucCSufbkkdpvJAdj55FWOBT0yMY6gc6t+wPSqI9ukakkN/v5KjHjFQ+BtJ99Q/mVw8knvrULFOnUNisM/fPnnj5rO6C3asiCwcfbCuWg9nFp0PDS8G0S7qU/vZyk8QeobB+BPjzPXuq2pKirJ4gjOTXzO8ARvYx0r4XN+YxaJb1vY7ea2w4uOyeTjgSd0epxSVLPJYk2pDklNscMcDNlgwAvN2vlrsLZlXa4xYLajlKpDgTveQ5n0qrydumhYZ3W58qUU8jHiLI9CcVnK9y7nOukiVe3JLtxKsPKkghaT3YPwjwwMVMab2fai1TurgwSiMr/mZB7Nv0J4q9AaaWaBWhj27En2AS2/W55X7FeP8on6i2o7MtXNlq82y4SFH4X/Ywl1HktKt4fp4UJNRwdPsvdpp+7OzYqz/AAZUdTTzXgeG6oeIx5V1Xm26esKlRGri7e5yfdcXHAaiNq6gL4qcx4YHjVeJHcAPCjFCoyIZic7Z7Hl8iMoVetOkOJGt2vLmrHp7aDfdOsmEl9Fwtq0lDkCaC60pJ4FI6pBHcceFfK06wkaWvS5+nguEy7jtIMhztEEfhJ4FQHRXBQ8esByq0ae2i3exqQzMbj3q3clQ7g2lwbv5VkFST8x4VdNWZhxawHPMcs/tn+5VcFt5LQ55GOR54Rb0rtd0/qBaGZixapqhjs5Kh2ZV+VzkfI4NetomzSHq9tdxgBuLdynKXRgIlcOS/HuX88jlwR9D6A2k2b9p2aOu1un3XBGwksr/AAraOUn0xkcjVebc1bsclNiWo3bTi1BOUElKAfw54tq/KfdNKrIWNlLqTiyQf6u+w7pnfK58WzcaHMP+w+/kqXpB+Rp/XVqMhDjDzE5DLzaxhScq3FJPoo0cdp92/YGjbktK9159PsrR6lS+BI8hvH0of7QosO66s0tqK1EOMXlbI3kjG+tDiQCR0O6QD/LXnbvqITb6xY2VAtwMuvYPN1fIeif9VbZ4hfswPxjgSfLB5fPgsUEho152Zzg8P1H44oXAbqQBypU5pGmxKyXSljNLNKouL7RJT1vlsTIy9x9hxLjau5QORWl7FqBjUlli3WOcIdRko/AscFJPkc1mI1fdk2rBaLobNKcxDnKBbJPBD3T0UOHmBS//AJBQ9oh3rR4m/ZMGgXtxNuncnfdFyRonTVxuQu0q0RnpoUFl1WcLUORUgHdUfMeear22W6vxNHLYaWpPtklDDqgeaMFRHrugVcGXMlSQrdSBwqibZbo01a7ZbFIQv2qR2qt4ckNjP1KgPLNKmnSSS2og8lwB6lM96NkdaQs8JI5qlaJ2aPakSmZcpK4UFXwhCQXXR4Z4JHiflRQi7MNDRWAg2oyVY4uPyHCo/IgCujQNtC7RHuEwHDyQthlXIJ6KI655gdBjvq2uXJlgpaXJabUvg2krCd7wAPP0q/UNUsySlrXkAdBw/wDqzUdMrxxAlgJPUoY6k2KWeZHW7p+Q5BkgZSy84XGV+GT7yfPiKDFwt8m2THoU1lbEhlRQ42rmkj/znWo7ooRHGXk4SXl7hA4DOCc/ShPtxtrRctd5bSA68FRXiPvFICknzwSPICieh6rM6UQTHaB5Hqh+taXE2MzwjBHMKt6A2hTNGyfZ3d+TaHlZejA8UHqtvPJXeOR8+NHVh6BfYDM+2yUyIy/eafbOCk/qFDqDxFZbFSun9UXnS0hT1onLjb/8RsgLbc/mSeB8+dEdV0Ntk72I7L/oVg0vWnVvdy8W/ULR4vV1gfGGZyBwyf3TmPMZB+QrutmoIt0cLQ3mHwMlh0YUR3jHBQ8qDMDbRdHykTrFGlo++uIpaFfI7wq6QLra9UwPbrS6vLSgFpWNx2OvngjofHkaVLOmzQD3rceYTTXvQWD7o8eyvc1tmVHeiyG0usPIU24g8lJIwRXxsERixWmFaooJYiMpZSTzIHU+JJJ9a4rFdVXGKtp9QMhjg6EjAPcryP6g0+oLymyW3tk+8+tXZMIJ4KV3nwHEnyrFh/8AxLXstzt9V23XUdvsmESFrffWN5uMynecUO/HIDxJAquzr1qi9srZgrjWJlfDtUj2iSB4ZwhJ8cGoAXGJaGHrjd5RAJC3X1DKnFdwHMk8gkVWpm2aUw4o2/TwQzx3VzFryR0JCQAPnRGrRlefctyR1PL9M8FitW4Yh752PIfwrnp3ZpZLY6uZIZVNlAlxcqevtCOpWc+6O/J+dUbaRtON27WyWB4otgG4/JQSDK/Kk8w3/q8udZ1JtB1Bqpox5stLURXOLFTuNq/m4kq9Tiq5mmahpDw/f3HbThyHQJZvaswsMNQbLep6lO2hTi0ttpKlKISlKRkkngAAP0ox6P2FMuMNy9USHkLUAr2GOoJKB3LXx494Ty76rmxO0M3DVTs+QneTbGO2QDy7RR3Un094+eKPUMtynXnCQoNEAJz1PHJFZdc1WWJ+4hOO5V2jaZHKzfyjPYKqSdlOguw7JNmKFcu0TKcCvnvUMddbK02FCptlluS4w4qjugdqgd4I4KHoD51oRM9lxS2ESW1up+JsKBUnzT09aqevbAtdlk3CAnDzKS44ynk4gDiQOigOPjg0HpapZjlAc8kHujFvTa74jhgHoh7sh0nf4MyNfWZMEWeawQ8kPby3AM4G6BwUlXfy4880WJkdi4RHokhhL0Z5JQ624MpWnqDQv2KXxa591su8VNrAmNDok5CV488pNFgoQzy41XrUkntZL+fDGO35VukRxisAziPNAd3OidXM22UFPW+wSHrrGKz7ykrbSW2/VYSPPJqiTZsi5TX5stwuSZDinXV96lHJqz7U7w1eNbz3GFAtMJRFyDwUUDj/AJiflVSp20+M7psrx4iBn7n5lJuoS+8dE0+EE/j6JGm50/KmoihyVKlxpCoonpcuIJBHIjgRSpZ8K4uhHXZxrVOpbSIkpf8A6nFAS4P+qno5/Y+PnVc23tFVxsThz2akOtKPQHfRn6GhxabrMslxYuMFzs5DByM8lDqkjqD1oqarkRdpOgDcbek+2W9fbrjDits7uHE+Pu+8D13aVJaApXmzt+Bxx6Eprive20nQu+No+YCJ6UtNBtpKglDYCEhJwABwGPQVnDW06TP1ndVXIKU41JW02FH+EhJwkJ7uGD65ow6C1GjVNhYfLoMphKWZCM8QoDgfJQ41za52YRdVv/tKLJRAuhSEr3klTT+BgFWOKVY4ZGfEcM0N0yaOnZeyxw6Z7IjqUT7VZrq/Hrjuou2a3lajkR3JiW47EcYaZQsrUo4xvrUcZOO4DmagdsF/amrt1qZWFljekPY5JKgAkeeAT6iuiBso1lEcAR+zino4mYBjxwRn6VaNP7FIrL3tV7eYlOqVvqAUp4lXiVYH0NbWyUq0wnDgQOQCxuFqxDudnBPMlCXTej7tqdxPsTARHzhUl3IbHgOqj4JyaM2lNkFotKEuyoiZ8kcS9P4IB/K0M4/qyavdut0O1NBERhLYAwFc1AefQeAwKru0PW69LwWmLewZl4nqLcSOlJUSeqyBxIHd1PrWSzq1i7JuYeAP94lX19Kr1GbyXiR/eAUvIgi1R0ldxgw2QPvpDSPIHOKhZrjQQZTYjuhY3A+wpK0ueG+n9DQO1NpvW0lLt51FAuLwPvLeewsNj+UE7g9ABULZ7vMsEoSYDpaVwCkD4HR3KTyI/TpWqPQNuMubKC7y5fPKzu10RyBr4yB9fkjjbJqrffGHnDutPK7B3uIUeB9FY+tedUyFTtSLZBJagjsQOgcOCo/oPSmhKYv1qj3JsFLUloLA/CeRHocj0rrcgtwvaH5KjvMqcckLVxORkrJ+RoJkNfxHiHBHwQ5uQeHNfa2REkBxxDP7v3u1dKUoa8SpXBP61abfH/ajJQ1eIEvHxJZUHgB48f7Vl/UepZmp5SnZLixE3ipmLn3Gx04cirvJrp03pXVM7Fz07AnJ7JXuSo57LCh0CiRnyGaOHQSItuWQNP0QA64HS7EcZI+v2Ry1Psms96bWtUBpiSeIk2/CF571Nngr9fGgtqnQF20utxxxHtcNJ/4llJ9zwcSeKD58PGjRsx11cLw/I09qaO5Fv0RAcBdRuGS2Oat38Q644EcR1q73GDFuiOzksBWBgLBKVjyI4+nKscOp2aEm6lOR8+HcFaJtOr3Wbxgwfl8ws47J9QNWW+yI7y0pRPY7JJJ4b6TvJHrxHyq53DaFK05PXKhIakocSEusOqKQrB4KChyUMkcq79SbEo1wWt60ux2nM7x7QFo/9yAU+u6KqE3ZLraS4G9yEtHw9quak58Twz9K3PkpXJd+5wHDiCssTLVSLchuexCplnusy36qhXG2FxM0ykEHeypzeWMpUfvZzg99amD4deUkgKQTuY7+hFDbQ2yVnS01u6XSW1OuLfFltpJ7JhX4snipXccADnx51ZNZaja0fp+TOUR2mC3HR1W6R7o9OZ8AaH6tPHbnZHW4kcM9/wD4t2lwyV4XyWOGeOOyGWxuMW9odyDXFmNHkoGOWO1SlNX/AGlazTpGyqDKwbjLBbjJ/B3uHwTn54qqbMzF0Joudqu8K3VXAgMoPxuoTndCR1K15PkAeVDPUmoZ2qbu9c5ysuOcENg+60gckJ8B9Tk0S9g9uvl7vgZgHzI6flD/AG72KkGj435I8gev4UZxJJJKieJJOSaVLkKRpsSoTlMaVKka6uJxTGnzSzUUTgUjSFKoomqU05qKfpa5IuEBeFDAcbV8Lqfwn+x6VGClVckbZGljxkFWRyOjcHsOCEQ2mJDMhWsdnyioH/jrUBvLYJ4lO4Pib5kY4p6cOVnsu2iyTUBN3Q/b5A+LKS40CO4jiPUUIbRep9gnon22Qph9HUcUqHcodRRXsN50btFUlq8WiGzelDCt7KFO+KHEkFXkeI8aW9SpMaMzMLmj/YfEPXvjumXT7rnnZhcGuP8AqeR9D09FYHtrmkITSnBdC+cZCGGlqV+gHzNPprVN61zMRKhwnbVp1peVPPcX5pHJCMcEp/EoZ7gcnh6g7PNIW98ONWRhxwHgZC1ugHyUSPpVmccCUjd90AYAxwA7gOlLkklRgIgaSe7un6D90fiZae7MxAHYfldy3hgqBT5VW7ZERI1HdLy8Qp9KhCYJ5ttIGSB3byiSe/h3VKoeyricdOfKoRqV7BcZbOd0KdLoP4goZz88/KskRIDg1a3tBxlS7shpCFqVudm2D2pVySMcQroBjnnpWXZ6o5nSlRRiJ2yy14N7x3fpiixr/RitQTF3C2XERnXkJTKYcWoNvbowFcOuMDBHQVFaR2aKVc2w+tq4SEELSw2D2Lf5nVEch3Y4+PKmbSZoKcTpS/JOOHZLeqwT25GxBmAOqvOzW0PCz2eC83j2doSXwroFKKkp8ySPkal9cW1xbU5tBO7c47jaTyAdKCMevA/OpOfPt2hNNy50p7fSykuOOEYU+8eCUjzOAB0HrXFo/UcPaNo1t2TuokgBqWhrmw+Oqf8AUPAkd9Lz3SPcbePDtc/M8UbZsMAr544+nJZfUlSApJSpKk5BT1B7q1HZpcE2W3rt5bTBDDaGd34QnAAHnn6+NDDW2zhS7ktwutQZbpJDiknsJf5gRxSrvH/9PrRGzt63XKPOu1zaWxGdD7UOO4pSVODkpWcDAPHgCTimTUrFe7A15fgjp3QHT609OdzNjIPXsiJqiGlz2G7sgJn2p9DzTvXs84cb/lUknh34NXJQGTjO6OtVGU77apEVJyp9aW0nzPH6Zq1PvpQT3c8UqyuJa0HomRrQCSOqpWtNTXzRUxVyEQ3bT7uO2Q3wfhL6kHkWzz48jkZAxXJC2x6QnIClXJUIgfw5TSkkeoBB9DVtelh1wpGCBwVnqKrFx2Y6PurhkO2dLDqyVKVFdUyCf5Qd36VrhkqPaG2GkEdW9fUFZpWWWHMJBHY/lRN42zaZt6FqhuO3N7B3UsoKE+q1AAfWqZKEzVjqNW66dVAsTP8AwsNGUqldzbSTxOfvLPMcuHKxXtWz/Zyf3FnYnXgDLbLiy8pB6FRUSED0z3ULdRalumqriqddJBdXyQgcENJ/CkdB9T1pi0ylG7xV2lo/7O5//kfugWo3Xt8M7gT/ANRy/U/svvqzVk3Vk9MiQlLEVkbkWI38EdHIADvwBk+nKoQUqfFM0UTImhjBgBLUsrpXF7zklNSpUjViqSzTZpUxHCoonpYzT0sVFE1euVeTSJqKL1403WkDwpVFEjzpd3HGDkHuNLFKuLoOFetMbWbrZkIi3RKrlETwCyrD6B/NyV68fGidZ9Z2bUTaTb5aXHPvMEbrifNJ4/LNZ2pAlKgtJKVJOUqScEHwPSgd3Qa852meF3ly+SO0temgGzJ4h9fmtNhxQJ4YPXhXBfbXJuEXtoYHtjKTuJUcBwfgz0Pd4+dB6ybTdSWXCDJRPZH+HLTvHH84979auVv20218hNxt0qIo81tEOo/sfpS9Lotuu7aa3aA7Jhi1mpO3ZLtk+ahH9aGFK7OZFcd7Je69GU4WV8OaScEpPpRS0JrXTmoofsllSmA62N5yEsYcH5s/fH5snxxVOvj+gNdtBb15ixZoGESc9m6O4KCwAseB4joRQ/umlLtpeQm42+dHlssK3251vfCi2e8pzvJ9QR4mtopQXI92cxydj/eP3WF9uetJt8Hs7hX7blZb5IDN29sVJtLACVR0p3fZlnhvkD4gTw3jyzjrmobYtY769d13eFNVBtrJDUglO8JZ59mEngcZzvfdz3nFXfQ2s2Ne2R+FcGm1TUNFqWzyS6hQxvgdAeRHQ+ler1e7fsv0lGjR0FxbaOxiMk8XnOZUrHTJyo+PlWZtueOA6bse8zjlwx3/AJ/VXGpFJOL4f4MZ/hWDWeq9P6dtuL8tDrT3FuHu77j2Pwp8PxcAO+g4NesuyyuBDehsqOG2FvF5eSeHHHPw4+ZqFiWW/wCu7i5dJ0phAeV+8nTnktNJA6JBOSB0SkURNNtbPdnxTJXfIU+5pBzJJ3yg9zaE53fPirxrQ2jBSj2HZkkPQcR/fqqfbJ7cm2zDGdyrhoy1zYjH7Su6C3MdThuOrmwg8yruWe7oPEnEzMlEkjIGetDe77cLOynct0KbMV+JQDSPmeP0qjXnapqO67yWHWrc2rgRHGV4/nPH5YrEzRrdl+25uyPP+5Wx+rVa7dna2j5cf4RkvepbTppntbjOaYODut5y455JHE0LtT7Y7pc0LiWZCrdHVwL6uL6h4dEfU+IofOOLfdU884t11XFTi1FSleZPGm4Uw0tAghO1J4j9PkgF3XppvDF4R9U6lKWpSlKKlKO8pSjkk95PU01KlR0DCBE5SNLOaRps11cT0iabjSxUUSpGlSNRROabjSzSFRRKkKc01RRImnpqVRRPmkaVNxqKJYzSpcqRqKJUqVKoupEAjlTBtAOQhIPeBxp6c1xTJUrpW/PaZv8AEuTKjutq3XUj77Z4KHy4+YFSG0XUf+0mp5DrTm/Djf7vGweBSOah5n6AVWaVZjUjM4sY8QGFqFyQQGDPAnKYoSTkpST3kU4GOXCnFKtOFlyU2KelnvpuFRRPSxTZxT5rq4lSpZFLIxUUSpsUhT1FEuVKlnjTc6iifPdTGlyps1FF/9k=) center/cover no-repeat;border-radius:50%}
+
+/* NAV */
+nav{position:fixed;inset:0 0 auto 0;z-index:30;display:flex;align-items:center;gap:4px;padding:calc(10px + env(safe-area-inset-top,0px)) 16px 10px;background:rgba(5,22,13,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav .brand{display:flex;align-items:center;gap:8px;font-weight:800;color:var(--gold);margin-right:10px;white-space:nowrap;text-decoration:none}
+nav .brand .lgimg{width:30px;height:30px;box-shadow:0 0 0 1px #d4af3755}
+nav .links{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav .links::-webkit-scrollbar{display:none}
+nav .links a{text-decoration:none;font-size:.86rem;padding:6px 11px;border-radius:999px;white-space:nowrap;color:#dfe9e1;transition:.2s}
+nav .links a:hover,nav .links a.act{background:#d4af3726;color:var(--gold2)}
+nav .live{text-decoration:none;margin-left:auto;display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--mut);white-space:nowrap;padding-left:10px}
+nav .live i{width:8px;height:8px;border-radius:50%;background:#5b7565}
+nav .live.on i{background:var(--ok);box-shadow:0 0 10px var(--ok);animation:pu 1.6s infinite}
+nav .live.on{color:var(--ok)}
+
+/* LAYOUT */
+section{padding:96px 20px 40px;max-width:1080px;margin:auto}
+.eyebrow{display:inline-block;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);background:#d4af3714;border:1px solid var(--line);padding:4px 12px;border-radius:999px;margin-bottom:10px}
+h2{font-size:clamp(1.7rem,4.6vw,2.5rem);line-height:1.2;margin-bottom:8px;background:linear-gradient(90deg,var(--white),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--mut);margin-bottom:28px;max-width:640px}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .9s,transform .9s}.rv.on{opacity:1;transform:none}
+
+/* HERO */
+#home{max-width:none;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;padding-top:110px;background:radial-gradient(ellipse at 50% 15%,#1d6b3d 0%,#0b2a19 45%,var(--bg) 75%)}
+#home::after{content:"";position:absolute;inset:auto 0 0 0;height:160px;background:linear-gradient(transparent,var(--bg));z-index:1}
+#home svg.f{position:absolute;bottom:0;left:0;width:100%;height:50%;opacity:.95}
+#home .c{position:relative;z-index:2;padding:0 16px;max-width:760px}
+.hero-logo{width:132px;height:132px;margin:0 auto 14px;box-shadow:0 0 0 2px #d4af3766,0 0 60px #d4af3755;animation:glow 4s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 0 2px #d4af37aa,0 0 90px #d4af3788}}
+.logo{font-size:clamp(2.8rem,12vw,5.6rem);font-weight:850;letter-spacing:.5px;line-height:1.05;background:linear-gradient(90deg,#fff,var(--gold),#fff);background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sh 6s linear infinite}
+@keyframes sh{to{background-position:200%}}
+.team-tag{color:var(--gold2);font-weight:600;letter-spacing:.2em;font-size:.8rem;text-transform:uppercase;margin-top:6px}
+.tag{color:#c7d8cc;max-width:600px;margin:14px auto 26px;font-size:1.08rem}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#06190f;font-weight:750;padding:12px 24px;border-radius:999px;text-decoration:none;border:0;font-size:.98rem;cursor:pointer;transition:.25s;font-family:inherit}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px #d4af3755}
+.btn.ghost{background:transparent;color:var(--gold2);border:1px solid #d4af3788}
+.btn.ghost:hover{background:#d4af3718}
+.btn:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none}
+.hero-live{display:inline-flex;align-items:center;gap:10px;margin-top:26px;padding:8px 16px;border-radius:999px;background:#0008;border:1px solid var(--line);font-size:.9rem;color:var(--mut);text-decoration:none}
+.hero-live b{color:var(--white)}
+.hero-live .dot{width:9px;height:9px;border-radius:50%;background:#5b7565}
+.hero-live.on .dot{background:var(--ok);box-shadow:0 0 10px var(--ok);animation:pu 1.6s infinite}
+.p{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:.6;animation:fl linear infinite;z-index:1}
+@keyframes fl{from{transform:translateY(105vh)}to{transform:translateY(-10vh)}}
+
+/* CARDS */
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card{background:linear-gradient(160deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:var(--r);padding:22px;transition:.3s;position:relative;overflow:hidden}
+.card:hover{transform:translateY(-5px);border-color:#d4af3799;box-shadow:0 14px 34px #0006}
+.card .ic{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem;background:#d4af3718;border:1px solid var(--line);margin-bottom:12px}
+.card h3{color:var(--gold2);margin-bottom:6px;font-size:1.12rem}
+.card p{color:var(--mut);font-size:.95rem}
+.card .stat{font-size:1.7rem;font-weight:800;color:var(--white);margin:2px 0 4px}
+.card .chip-s{display:inline-block;margin-top:10px;font-size:.75rem;color:var(--gold2);background:#d4af3714;border:1px solid var(--line);border-radius:999px;padding:2px 10px}
+
+.u5 .grid{grid-template-columns:repeat(auto-fit,minmax(185px,1fr))}
+/* STEPS */
+.steps{counter-reset:s;display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.step{background:linear-gradient(160deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:var(--r);padding:20px;position:relative}
+.step:before{counter-increment:s;content:counter(s);width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#06190f;font-weight:850;display:grid;place-items:center;margin-bottom:12px}
+.step b{display:block;margin-bottom:4px}
+.step p{color:var(--mut);font-size:.93rem}
+
+/* MONITOR */
+.dash{border:1px solid #d4af3755;border-radius:26px;padding:22px;background:linear-gradient(160deg,#0f3622,#06190f);box-shadow:0 20px 60px #0007}
+.dash-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:space-between}
+.dash-top h3{display:flex;align-items:center;gap:10px;font-size:1.15rem}
+.dash-top h3 .lgimg{width:34px;height:34px}
+.st{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;font-weight:700;font-size:.88rem;background:#ff4d4d1f;color:var(--red)}
+.st i{width:9px;height:9px;border-radius:50%;background:currentColor;animation:pu 1.4s infinite}
+.st.on{background:#4fd8841f;color:var(--ok)}
+.st.wait{background:#f2c94c1f;color:var(--warn)}
+@keyframes pu{50%{opacity:.25}}
+.upd{color:var(--mut);font-size:.82rem}
+
+.risk{margin-top:18px;display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;padding:20px;border-radius:20px;background:#05160d;border:1px solid #ffffff14;transition:.4s}
+.gauge{width:132px;height:132px;position:relative}
+.gauge svg{width:100%;height:100%;transform:rotate(-90deg)}
+.gauge .bgc{stroke:#ffffff14}
+.gauge .fgc{stroke:#5b7565;transition:stroke-dashoffset .8s,stroke .4s}
+.gauge .gv{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.gauge .gv b{font-size:2rem;line-height:1}
+.gauge .gv small{display:block;color:var(--mut);font-size:.72rem}
+.risk h4{font-size:clamp(1.3rem,4vw,1.8rem);line-height:1.2}
+.risk .why{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
+.risk .why span{font-size:.8rem;padding:3px 10px;border-radius:999px;background:#ffffff0d;border:1px solid #ffffff1a;color:#d8e4dc}
+.risk .why span.hot{border-color:currentColor}
+.risk p{color:var(--mut);font-size:.92rem;margin-top:6px}
+.risk.l0{border-color:#4fd88466}.risk.l0 h4{color:var(--ok)}
+.risk.l1{border-color:#f2c94c77}.risk.l1 h4{color:var(--warn)}
+.risk.l2{border-color:#ff9a3c99}.risk.l2 h4{color:var(--orange)}
+.risk.l3{border-color:var(--red);box-shadow:0 0 0 1px var(--red),0 0 40px #ff4d4d44;animation:alarm 1.2s infinite}.risk.l3 h4{color:var(--red)}
+@keyframes alarm{50%{box-shadow:0 0 0 1px var(--red),0 0 10px #ff4d4d22}}
+
+.meters{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-top:14px}
+.m{background:#05160d;border:1px solid #d4af3733;border-radius:18px;padding:16px;position:relative;overflow:hidden;transition:.3s}
+.m small{color:var(--mut);font-size:.82rem;display:flex;align-items:center;gap:6px}
+.m .v{font-size:2.1rem;font-weight:800;color:var(--gold2);margin-top:4px;font-variant-numeric:tabular-nums;line-height:1.2}
+.m .v u{text-decoration:none;font-size:1rem;color:var(--mut);font-weight:600;margin-left:3px}
+.m .hint{font-size:.76rem;color:var(--mut);margin-top:2px}
+.m.off .v{color:#4c6656}
+.m.alert{border-color:var(--red);background:#2a0d0d}
+.m.alert .v{color:var(--red)}
+.m.warnb{border-color:#f2c94c88}
+
+.charts{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:14px}
+.ch{background:#05160d;border:1px solid #d4af3733;border-radius:18px;padding:14px 16px}
+.ch .hd{display:flex;justify-content:space-between;align-items:baseline;font-size:.85rem;color:var(--mut)}
+.ch .hd b{color:var(--white);font-weight:650}
+.ch svg{width:100%;height:110px;display:block;margin-top:6px}
+.tl{margin-top:14px;background:#05160d;border:1px solid #d4af3733;border-radius:18px;padding:14px 16px}
+.tl .hd{display:flex;justify-content:space-between;font-size:.85rem;color:var(--mut);gap:10px;flex-wrap:wrap}
+.tl .bar{display:flex;gap:2px;height:26px;margin-top:10px;align-items:stretch}
+.tl .bar i{flex:1;border-radius:3px;background:#ffffff10;min-width:2px}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:.76rem;color:var(--mut)}
+.legend span:before{content:"";display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px;background:var(--c)}
+
+.empty{margin-top:16px;text-align:center;color:var(--mut);padding:26px 14px;border:1px dashed #d4af3744;border-radius:18px}
+.empty b{color:var(--white);display:block;margin-bottom:4px}
+.conn{margin-top:14px}
+.conn summary{cursor:pointer;color:var(--gold2);font-size:.9rem;list-style:none}
+.conn summary::-webkit-details-marker{display:none}
+.conn summary:before{content:"⚙️ "}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+input{flex:1;min-width:200px;padding:12px 14px;border-radius:14px;border:1px solid #d4af3755;background:#05160d;color:var(--white);font-size:1rem;font-family:inherit;outline:none}
+input:focus{border-color:var(--gold)}
+.note{color:var(--mut);font-size:.84rem;margin-top:8px}
+.note code{background:#ffffff12;padding:1px 6px;border-radius:6px;color:var(--gold2)}
+
+/* FUTURE */
+ul.fut{list-style:none;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+ul.fut li{background:linear-gradient(160deg,var(--card),var(--bg2));border:1px solid var(--line);padding:16px 18px;border-radius:16px;display:flex;gap:12px;align-items:flex-start}
+ul.fut li em{font-style:normal;font-size:1.4rem}
+
+/* CHAT */
+.chat{border:1px solid #d4af3755;border-radius:26px;background:linear-gradient(160deg,#0f3622,#06190f);padding:18px}
+#log{height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:6px 2px}
+.msg{max-width:86%;padding:10px 14px;border-radius:18px;white-space:pre-wrap;font-size:.95rem}
+.msg.bot{background:#0a2617;border:1px solid #d4af3744;align-self:flex-start;border-bottom-left-radius:6px}
+.msg.me{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#06190f;align-self:flex-end;font-weight:600;border-bottom-right-radius:6px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 2px}
+.chip{background:#d4af3718;color:var(--white);border:1px solid #d4af3755;border-radius:999px;padding:6px 12px;font-size:.84rem;cursor:pointer;transition:.2s;font-family:inherit}
+.chip:hover{background:#d4af3733}
+
+/* END */
+.final{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.final .lgimg{width:150px;height:150px;box-shadow:0 0 50px #d4af3744}
+.final p{font-size:1.06rem;color:#dfe9e1}
+.final .quote{margin-top:12px;color:var(--gold2);font-weight:700}
+footer{text-align:center;color:var(--mut);padding:34px 20px;border-top:1px solid var(--line);font-size:.9rem}
+footer b{color:var(--gold2)}
+
+@media (max-width:640px){
+  nav .live span{display:none}
+  .risk{grid-template-columns:1fr;text-align:center;justify-items:center}
+  .risk .why{justify-content:center}
+  .final{grid-template-columns:1fr;text-align:center;justify-items:center}
+  .dash{padding:16px}
+  .m{padding:14px}
+  .m .v{font-size:1.7rem}
+  section{padding-left:16px;padding-right:16px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="#home"><span class="lgimg"></span>ForestCare</a>
+  <div class="links">
+    <a href="#research">Зерттеу</a><a href="#unique">Ерекшелігі</a><a href="#how">Жұмыс принципі</a><a href="#monitor">Бақылау</a><a href="#ai">AI көмекші</a><a href="#future">Болашақ</a><a href="#end">Қорытынды</a>
+  </div>
+  <a class="live" id="navLive" href="#monitor"><i></i><span id="navLiveT">Офлайн</span></a>
+</nav>
+
+<section id="home">
+  <svg class="f" viewBox="0 0 800 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><g fill="#0b3a20"><path d="M0 300V190l40-90 40 90 30-60 40 100 40-130 45 140 35-80 45 110 40-150 45 160 40-90 40 100 45-140 40 120 40-70 45 110 40-120 40 140 20-60V300z"/></g><g fill="#12552e"><path d="M0 300V230l30-70 30 70 30-40 35 80 35-110 35 110 30-60 40 90 35-120 40 130 35-70 40 80 35-100 40 100 35-60 40 90 35-110 35 100 30-50V300z"/></g><g fill="#05160d"><path d="M0 300V260l25-50 25 50 30-30 30 60 30-80 30 80 30-40 30 60 30-90 30 90 30-50 30 50 30-70 30 70 30-40 30 50 30-60 30 60 30-30 30 40V300z"/></g></svg>
+  <div class="c">
+    <div class="lgimg hero-logo" role="img" aria-label="OYAN логотипі"></div>
+    <h1 class="logo">ForestCare</h1>
+    <div class="team-tag">OYAN командасы · Future Edition</div>
+    <p class="tag">Орман өрттерін BME280 және MQ-2 сенсорлары, Raspberry Pi, дрон және жасанды интеллект арқылы өрт шықпай тұрып анықтаймыз.</p>
+    <div class="btns"><a class="btn" href="#monitor">📡 Тірі бақылау</a><a class="btn ghost" href="#how">Қалай жұмыс істейді?</a></div>
+    <a class="hero-live" id="heroLive" href="#monitor"><span class="dot"></span><span id="heroLiveT">Сенсорлар қосылуын күтуде…</span></a>
+  </div>
+</section>
+
+<section id="research">
+  <span class="eyebrow rv">Мәселе</span>
+  <h2 class="rv">Зерттеу</h2><p class="sub rv">Орман өрттері — бүкіл әлемге ортақ қауіп. Өртті неғұрлым ерте байқасақ, соғұрлым шығын аз болады.</p>
+  <div class="grid">
+    <div class="card rv"><div class="ic">🇨🇳</div><h3>Қытай</h3><div class="stat">30 адам</div><p>2019 жылы Сычуань өлкесіндегі орман өртінде 30 өрт сөндіруші қаза тапты. Таулы, қол жетуі қиын аумақтар өртті уақытылы анықтауды қиындатады.</p></div>
+    <div class="card rv"><div class="ic">🇦🇺</div><h3>Австралия</h3><div class="stat">18 млн га</div><p>2019–2020 жылдардағы «Қара жаз» өрттерінде 18 миллион гектардан астам жер өртеніп, миллиардтаған жануар зардап шекті.</p></div>
+    <div class="card rv"><div class="ic">🇰🇿</div><h3>Қазақстан</h3><div class="stat">2023 жыл</div><p>Абай облысындағы орман өрттері адам шығынына әкеліп, жергілікті тұрғындарға үлкен зиян келтірді. Қуаңшылық пен жел өртті жылдам таратады.</p></div>
+  </div>
+</section>
+
+<section id="unique" class="u5">
+  <span class="eyebrow rv">Шешім</span>
+  <h2 class="rv">Жобаның ерекшелігі</h2><p class="sub rv">Сенсорлар, шағын компьютер және жасанды интеллект — бір ақылды жүйеде.</p>
+  <div class="grid">
+    <div class="card rv"><div class="ic">📟</div><h3>BME280 сенсоры</h3><p>Ауа температурасын, ылғалдылығын және атмосфералық қысымды дәл өлшейді. Ыстық әрі құрғақ ауа — өрттің басты белгісі.</p><span class="chip-s">I2C · 3.3V</span></div>
+    <div class="card rv"><div class="ic">💨</div><h3>MQ-2 сенсоры</h3><p>Түтін мен жанғыш газдарды сезеді. Түтін пайда болған сәтте жүйеге белгі береді.</p><span class="chip-s">GPIO17 · 5V</span></div>
+    <div class="card rv"><div class="ic">🍓</div><h3>Raspberry Pi 4</h3><p>Сенсорлардан мәлімет жинап, қауіп деңгейін есептейді, деректерді сақтайды және осы сайтқа тікелей жібереді.</p><span class="chip-s">5 сек сайын өлшейді</span></div>
+    <div class="card rv"><div class="ic">🧠</div><h3>Жасанды интеллект</h3><p>Деректерді талдап, өрт қаупінің деңгейін анықтайды және сұрақтарға жауап береді.</p><span class="chip-s">4 деңгейлі баға</span></div>
+    <div class="card rv"><div class="ic">🚁</div><h3>Дрон</h3><p>Сенсорлық қорапшаны орманның қол жетуі қиын, қауіпті нүктелеріне тез жеткізеді.</p><span class="chip-s">Болашақ кезең</span></div>
+  </div>
+</section>
+
+<section id="how">
+  <span class="eyebrow rv">Технология</span>
+  <h2 class="rv">Жұмыс принципі</h2><p class="sub rv">Өрттен бұрын әрекет ету жолы — 4 қадам.</p>
+  <div class="steps">
+    <div class="step rv"><b>Сенсорлар өлшейді</b><p>BME280 температураны, ылғалдылықты және қысымды, ал MQ-2 түтін мен жанғыш газдарды үздіксіз өлшейді.</p></div>
+    <div class="step rv"><b>Raspberry Pi есептейді</b><p>Әр 5 секунд сайын деректерді жинап, қауіп ұпайын санайды: ыстық, құрғақ ауа және түтін ұпай қосады.</p></div>
+    <div class="step rv"><b>Сайт көрсетеді</b><p>Нәтиже осы беттегі «Ақылды бақылау» тақтасында графиктермен бірге тікелей көрінеді.</p></div>
+    <div class="step rv"><b>Ескерту жіберіледі</b><p>Қауіп жоғарыласа, жүйе дабыл қағып, Telegram арқылы жауаптыларға хабарлама жібереді.</p></div>
+  </div>
+</section>
+
+<section id="monitor">
+  <span class="eyebrow rv">Тікелей эфир</span>
+  <h2 class="rv">Ақылды бақылау</h2><p class="sub rv">Мәндер тек нақты Raspberry Pi-дан келеді — ешқандай ойдан шығарылған сан жоқ.</p>
+  <div class="dash rv">
+    <div class="dash-top">
+      <h3><span class="lgimg"></span>OYAN сенсорлық станциясы</h3>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span class="upd" id="upd"></span>
+        <div class="st" id="st"><i></i><span id="stt">Raspberry Pi қосылмаған</span></div>
+      </div>
+    </div>
+
+    <div id="liveBox" hidden>
+      <div class="risk" id="risk">
+        <div class="gauge">
+          <svg viewBox="0 0 120 120"><circle class="bgc" cx="60" cy="60" r="50" fill="none" stroke-width="12"/><circle class="fgc" id="gArc" cx="60" cy="60" r="50" fill="none" stroke-width="12" stroke-linecap="round" stroke-dasharray="314.16" stroke-dashoffset="314.16"/></svg>
+          <div class="gv"><div><b id="gScore">0</b><small>ұпай / 8</small></div></div>
+        </div>
+        <div>
+          <small style="color:var(--mut)">Өрт қаупінің деңгейі</small>
+          <h4 id="lvl">—</h4>
+          <p id="lvlTxt"></p>
+          <div class="why" id="why"></div>
+        </div>
+      </div>
+
+      <div class="meters">
+        <div class="m" id="mt"><small>🌡 Температура</small><div class="v" id="vt">—</div><div class="hint" id="ht"></div></div>
+        <div class="m" id="mh"><small>💧 Ылғалдылық</small><div class="v" id="vh">—</div><div class="hint" id="hh"></div></div>
+        <div class="m" id="mp"><small>⏱ Қысым</small><div class="v" id="vp">—</div><div class="hint">атмосфералық</div></div>
+        <div class="m" id="ms"><small>💨 Түтін (MQ-2)</small><div class="v" id="vs">—</div><div class="hint" id="hs"></div></div>
+      </div>
+
+      <div class="charts">
+        <div class="ch"><div class="hd"><span>🌡 Температура</span><b id="ctR">—</b></div><svg id="cT" viewBox="0 0 300 110" preserveAspectRatio="none"></svg></div>
+        <div class="ch"><div class="hd"><span>💧 Ылғалдылық</span><b id="chR">—</b></div><svg id="cH" viewBox="0 0 300 110" preserveAspectRatio="none"></svg></div>
+      </div>
+
+      <div class="tl">
+        <div class="hd"><span>📊 Қауіп деңгейінің тарихы <span id="tlSpan"></span></span>
+          <span class="legend"><span style="--c:var(--ok)">Қалыпты</span><span style="--c:var(--warn)">Назар</span><span style="--c:var(--orange)">Қауіпті</span><span style="--c:var(--red)">Өрт қаупі</span></span></div>
+        <div class="bar" id="tlBar"></div>
+      </div>
+    </div>
+
+    <div class="empty" id="emptyBox"><b>📡 Сенсорлар деректері әзірге жоқ</b>Raspberry Pi қосылғанда температура, ылғалдылық, қысым және түтін мәндері осы жерде пайда болады.</div>
+
+    <details class="conn" id="connBox">
+      <summary>Raspberry Pi мекенжайы</summary>
+      <div class="row"><input id="ip" placeholder="мысалы: http://raspberrypi.local:5000" inputmode="url" autocomplete="off"><button class="btn" id="cb">Қосылу</button></div>
+      <p class="note">Бұл бетті Raspberry Pi-дың өзінен ашсаңыз (<code>http://raspberrypi.local:5000</code>), байланыс автоматты түрде орнайды. Компьютер мен Pi бір Wi-Fi желісінде болуы керек.</p>
+    </details>
+  </div>
+</section>
+
+<section id="ai">
+  <span class="eyebrow rv">Көмекші</span>
+  <h2 class="rv">🧠 ForestCare AI көмекші</h2><p class="sub rv">Жоба, сенсорлар немесе қазіргі көрсеткіштер туралы сұрақ қойыңыз.</p>
+  <div class="chat rv">
+    <div id="log"><div class="msg bot">Сәлем! Мен ForestCare жобасының AI көмекшісімін 🌲 Сенсорлар, Raspberry Pi, өрт қаупі немесе қазіргі көрсеткіштер туралы сұраңыз.</div></div>
+    <div class="chips"><button class="chip">Қазір жағдай қандай?</button><button class="chip">BME280 не өлшейді?</button><button class="chip">MQ-2 не үшін керек?</button><button class="chip">Қауіп қалай есептеледі?</button><button class="chip">Өрттің алдын қалай алуға болады?</button></div>
+    <div class="row"><input id="q" placeholder="Сұрағыңызды жазыңыз..." autocomplete="off"><button class="btn" id="qb">Жіберу</button></div>
+  </div>
+</section>
+
+<section id="future">
+  <span class="eyebrow rv">Жоспар</span>
+  <h2 class="rv">Болашақ жоспарлар</h2><p class="sub rv">ForestCare-ді әрі қарай дамытамыз.</p>
+  <ul class="fut">
+    <li class="rv"><em>🛰</em><span>Көп сенсорлы желі құрып, бүкіл орманды қамту</span></li>
+    <li class="rv"><em>🚁</em><span>Сенсорлық қорапшаларды дронмен жеткізу</span></li>
+    <li class="rv"><em>☀️</em><span>Күн батареясымен жұмыс істейтін қорапшалар</span></li>
+    <li class="rv"><em>📱</em><span>Орманшыларға арналған мобильді қосымша</span></li>
+    <li class="rv"><em>🧠</em><span>Өрт қаупін алдын ала болжайтын AI моделі</span></li>
+  </ul>
+</section>
+
+<section id="end">
+  <span class="eyebrow rv">Қорытынды</span>
+  <h2 class="rv">Қорытынды</h2>
+  <div class="card rv"><div class="final"><div class="lgimg" role="img" aria-label="OYAN"></div><div><p>ForestCare — BME280 және MQ-2 сенсорларын, Raspberry Pi-ды, жасанды интеллект пен дронды біріктіретін жоба. Ол өртті алдын ала байқап, орманды, жануарларды және адамдардың өмірін сақтауға көмектеседі.</p><p class="quote">Орманды қорғау — болашақты қорғау. 🌲</p></div></div></div>
+</section>
+
+<footer>🌲 <b>ForestCare</b> · OYAN командасы · Орман өрттерінің алдын алу</footer>
+
+<script src="config.js"></script>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+
+/* ---------- Hero particles & reveal ---------- */
+var hm=$('home');
+for(var i=0;i<22;i++){var p=document.createElement('span');p.className='p';p.style.left=Math.random()*100+'%';p.style.animationDuration=(9+Math.random()*12)+'s';p.style.animationDelay=(-Math.random()*15)+'s';hm.appendChild(p)}
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target)}})},{threshold:.12});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+  var navLinks=document.querySelectorAll('nav .links a');
+  var so=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){navLinks.forEach(function(a){a.classList.toggle('act',a.getAttribute('href')==='#'+x.target.id)})}})},{rootMargin:'-45% 0px -50% 0px'});
+  document.querySelectorAll('section[id]').forEach(function(s){so.observe(s)});
+}else{document.querySelectorAll('.rv').forEach(function(el){el.classList.add('on')})}
+
+/* ---------- Live monitor ---------- */
+var LV={'ҚАЛЫПТЫ':0,'НАЗАР':1,'ҚАУІПТІ':2,'ӨРТ ҚАУПІ!':3};
+var LVC=['var(--ok)','var(--warn)','var(--orange)','var(--red)'];
+var LVHEX=['#4fd884','#f2c94c','#ff9a3c','#ff4d4d'];
+var LVTXT=[
+ 'Жағдай тыныш. Сенсорлар қалыпты мәндерді көрсетіп тұр.',
+ 'Ауа райы өрт шығуына қолайлы. Бақылауды күшейткен жөн.',
+ 'Қауіп жоғары! Аумақты тексеріп, дайын тұрыңыз.',
+ 'ӨРТ ҚАУПІ! Түтін анықталды және ауа ыстық/құрғақ. Жедел әрекет етіңіз, 112-ге хабарлаңыз!'
+];
+var timer=null,base=null,lastOk=0,fails=0,latest=null;
+function ok(n){return typeof n==='number'&&isFinite(n)}
+function setStatus(cls,txt){$('st').className='st'+(cls?' '+cls:'');$('stt').textContent=txt}
+function setLive(on,txt){
+  $('navLive').className='live'+(on?' on':'');$('navLiveT').textContent=on?'Онлайн':'Офлайн';
+  $('heroLive').className='hero-live'+(on?' on':'');$('heroLiveT').innerHTML=txt;
+}
+function offline(msg){
+  latest=null;
+  setStatus('',msg||'Raspberry Pi қосылмаған');
+  $('liveBox').hidden=true;$('emptyBox').hidden=false;$('upd').textContent='';
+  setLive(false,'Сенсорлар қосылуын күтуде…');
+}
+function factors(d){
+  var f=[];
+  if(d.t>40)f.push(['🌡 Қатты ыстық +2',1]);else if(d.t>30)f.push(['🌡 Ыстық +1',1]);else f.push(['🌡 Температура қалыпты',0]);
+  if(d.h<20)f.push(['💧 Өте құрғақ +2',1]);else if(d.h<35)f.push(['💧 Құрғақ ауа +1',1]);else f.push(['💧 Ылғалдылық қалыпты',0]);
+  f.push(d.smoke?['💨 Түтін бар +4',1]:['💨 Түтін жоқ',0]);
+  return f;
+}
+function drawChart(svg,vals,color){
+  if(vals.length<2){svg.innerHTML='<text x="150" y="60" text-anchor="middle" fill="#9fbba8" font-size="12">Деректер жиналуда…</text>';return null}
+  var mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals);
+  var pad=Math.max((mx-mn)*0.15,0.5);mn-=pad;mx+=pad;
+  var W=300,H=110,n=vals.length;
+  var pts=vals.map(function(v,i){return [(i/(n-1))*W,H-((v-mn)/(mx-mn))*(H-12)-6]});
+  var d=pts.map(function(p,i){return (i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)}).join(' ');
+  var id='g'+svg.id;
+  var last=pts[pts.length-1];
+  svg.innerHTML='<defs><linearGradient id="'+id+'" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="'+color+'" stop-opacity=".35"/><stop offset="1" stop-color="'+color+'" stop-opacity="0"/></linearGradient></defs>'+
+    '<path d="'+d+' L'+W+' '+H+' L0 '+H+' Z" fill="url(#'+id+')"/>'+
+    '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="2.2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>'+
+    '<circle cx="'+last[0]+'" cy="'+last[1]+'" r="3.5" fill="'+color+'"/>';
+  return [Math.min.apply(null,vals),Math.max.apply(null,vals)];
+}
+function hhmm(ts){var x=new Date(ts*1000);return ('0'+x.getHours()).slice(-2)+':'+('0'+x.getMinutes()).slice(-2)}
+function show(d,stale){
+  if(!d||!d.ok||!ok(d.t)||!ok(d.h)||!ok(d.p)){
+    if(d&&d.ok===false){setStatus('wait','Pi қосылды, сенсорлар іске қосылуда…');return}
+    offline('Raspberry Pi деректері жарамсыз');return;
+  }
+  latest=d;lastOk=(CLOUD&&d.ts)?d.ts*1000:Date.now();fails=0;
+  $('liveBox').hidden=false;$('emptyBox').hidden=true;
+  var lv=LV[d.level];if(lv===undefined)lv=0;
+  if(stale){
+    setStatus('','Raspberry Pi офлайн');
+    setLive(false,'<b>Pi офлайн</b> · соңғы дерек: '+hhmm(d.ts)+' · '+d.t.toFixed(1)+'°C');
+  }else{
+    if(d.warm){setStatus('wait','MQ-2 қызып жатыр · '+(d.warm_left||0)+' сек')}else setStatus('on','Raspberry Pi қосулы');
+    setLive(true,'<b>Тікелей:</b> '+d.t.toFixed(1)+'°C · '+d.h.toFixed(0)+'% · '+d.level);
+  }
+
+  // gauge
+  var sc=Math.max(0,Math.min(8,d.score||0));
+  $('gScore').textContent=sc;
+  $('gArc').style.strokeDashoffset=(314.16*(1-sc/8)).toFixed(1);
+  $('gArc').style.stroke=LVHEX[lv];
+  $('risk').className='risk l'+lv;
+  $('lvl').textContent=(['🟢','🟡','🟠','🔴'][lv])+' '+d.level;
+  $('lvlTxt').textContent=d.warm?'MQ-2 датчигі қызып жатыр — түтін көрсеткіші бірнеше минуттан соң дәлірек болады.':LVTXT[lv];
+  $('why').innerHTML=factors(d).map(function(f){return '<span class="'+(f[1]?'hot':'')+'" style="'+(f[1]?'color:'+LVHEX[Math.max(lv,1)]:'')+'">'+f[0]+'</span>'}).join('');
+
+  // meters
+  $('vt').innerHTML=d.t.toFixed(1)+'<u>°C</u>';
+  $('vh').innerHTML=d.h.toFixed(1)+'<u>%</u>';
+  $('vp').innerHTML=d.p.toFixed(1)+'<u>hPa</u>';
+  $('vs').textContent=d.smoke?'БАР!':'Жоқ';
+  $('hs').textContent=d.smoke?'Түтін анықталды':'Ауа таза';
+  $('ht').textContent=d.t>40?'Қатты ыстық':d.t>30?'Ыстық':'Қалыпты';
+  $('hh').textContent=d.h<20?'Өте құрғақ':d.h<35?'Құрғақ':'Қалыпты';
+  $('mt').className='m'+(d.t>40?' alert':d.t>30?' warnb':'');
+  $('mh').className='m'+(d.h<20?' alert':d.h<35?' warnb':'');
+  $('mp').className='m';
+  $('ms').className='m'+(d.smoke?' alert':'');
+
+  // charts & timeline
+  var hs=(d.history||[]).filter(function(r){return ok(r.t)&&ok(r.h)});
+  var rt=drawChart($('cT'),hs.map(function(r){return r.t}),'#f1d478');
+  var rh=drawChart($('cH'),hs.map(function(r){return r.h}),'#5cc8ff');
+  $('ctR').textContent=rt?rt[0].toFixed(1)+'…'+rt[1].toFixed(1)+' °C':'—';
+  $('chR').textContent=rh?rh[0].toFixed(0)+'…'+rh[1].toFixed(0)+' %':'—';
+  var tl=hs.slice(-90);
+  $('tlBar').innerHTML=tl.map(function(r){var l=LV[r.level];if(l===undefined)l=0;return '<i style="background:'+LVC[l]+'" title="'+new Date(r.ts*1000).toLocaleTimeString()+' · '+r.level+'"></i>'}).join('');
+  if(tl.length>1){var mins=Math.round((tl[tl.length-1].ts-tl[0].ts)/60);$('tlSpan').textContent='· соңғы '+(mins<1?'1':mins)+' минут'}
+}
+function tick(){
+  if(lastOk){var s=Math.max(0,Math.round((Date.now()-lastOk)/1000));$('upd').textContent='Жаңартылды: '+(s<3?'жаңа ғана':s<120?s+' сек бұрын':s<7200?Math.round(s/60)+' мин бұрын':Math.round(s/3600)+' сағ бұрын')}
+}
+setInterval(tick,1000);
+function poll(){
+  if(!base)return;
+  fetch(base+'/data',{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(show).catch(function(){
+    fails++;
+    if(fails>=3||!latest)offline('Raspberry Pi-ға қосылу мүмкін болмады');
+  });
+}
+var CLOUD=(window.OYAN_CLOUD||'').replace(/\/+$/,''),cloudHist=[],histAt=0;
+function getJSON(u){return fetch(u,{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()})}
+function pollCloud(){
+  var now=Date.now(),reqs=[getJSON(CLOUD+'/oyan/latest.json')];
+  if(now-histAt>30000)reqs.push(getJSON(CLOUD+'/oyan/history.json').then(function(h){if(h){cloudHist=(Array.isArray(h)?h:Object.values(h)).filter(Boolean);histAt=now}}).catch(function(){}));
+  Promise.all(reqs).then(function(res){
+    var d=res[0];
+    if(!d||!ok(d.t)){offline('Бұлтта әлі дерек жоқ — Raspberry Pi-ды қосыңыз');return}
+    d.ok=true;d.history=cloudHist.length?cloudHist:[d];
+    show(d,(Date.now()/1000-(d.ts||0))>60);
+  }).catch(function(){fails++;if(fails>=3||!latest)offline('Бұлттағы дерекқорға қосылу мүмкін болмады')});
+}
+function connect(u){
+  u=(u||'').trim();if(!u)return;
+  if(!/^https?:\/\//.test(u))u='http://'+u;
+  base=u.replace(/\/+$/,'');
+  try{localStorage.setItem('oyan_pi',base)}catch(e){}
+  clearInterval(timer);fails=0;setStatus('wait','Қосылуда…');
+  poll();timer=setInterval(poll,3000);
+}
+$('cb').onclick=function(){connect($('ip').value)};
+$('ip').onkeydown=function(e){if(e.key==='Enter')connect($('ip').value)};
+
+// Auto-connect: page served from the Pi itself → same origin
+var servedByPi=/^https?:$/.test(location.protocol)&&location.port==='5000';
+if(servedByPi){CLOUD='';base=location.origin;$('connBox').hidden=true;setStatus('wait','Қосылуда…');poll();timer=setInterval(poll,3000)}
+else if(CLOUD){$('connBox').hidden=true;setStatus('wait','Қосылуда…');pollCloud();timer=setInterval(pollCloud,5000)}
+else{
+  var saved=null;try{saved=localStorage.getItem('oyan_pi')}catch(e){}
+  $('ip').value=saved||'http://raspberrypi.local:5000';
+  if(location.protocol!=='https:')connect($('ip').value);else $('connBox').open=true;
+}
+
+/* ---------- AI assistant ---------- */
+var SYS="Сен ForestCare жобасының AI көмекшісісің. Тек қазақ тілінде, қысқа және түсінікті жауап бер. Команда: OYAN, Future Edition байқауына қатысады. Тәлімгерлер: Bakkeldi Karagol және Kenzhebek Sultan. Жоба: орман өртін ерте анықтау жүйесі. Raspberry Pi 4-ке екі сенсор қосылған: BME280 (температура, ылғалдылық, қысым; I2C арқылы) және MQ-2 (түтін мен жанғыш газдар; цифрлық DO шығысы GPIO17-ге). Pi әр 5 секунд сайын өлшейді. Қауіп ұпайы: температура >30°C +1, >40°C +2; ылғалдылық <35% +1, <20% +2; түтін +4. Деңгейлер: 0–1 ҚАЛЫПТЫ, 2–3 НАЗАР, 4–5 ҚАУІПТІ, 6+ ӨРТ ҚАУПІ!. Қауіп кезінде Telegram арқылы ескерту жіберіледі. Болашақта дрон сенсорлық қорапшаны орманға жеткізеді. Ешқашан өлшем сандарын ойдан шығарма — тек төменде берілген нақты деректерді қолдан. Жобаға қатыссыз сұрақтарға сыпайы түрде тек осы тақырыпта көмектесе алатыныңды айт.";
+var hist=[],busy=false,smp=null;
+function add(c,t){var d=document.createElement('div');d.className='msg '+c;d.textContent=t;$('log').appendChild(d);$('log').scrollTop=1e9;return d}
+function nowText(){
+  if(!latest)return 'Қазір Raspberry Pi қосылмаған, сондықтан нақты көрсеткіштер жоқ. Pi қосылғанда «Ақылды бақылау» бөлімінде мәндер пайда болады.';
+  var d=latest;
+  return 'Қазіргі нақты көрсеткіштер:\n🌡 '+d.t.toFixed(1)+' °C\n💧 '+d.h.toFixed(1)+' %\n⏱ '+d.p.toFixed(1)+' hPa\n💨 Түтін: '+(d.smoke?'БАР':'жоқ')+'\n\nҚауіп деңгейі: '+d.level+' ('+d.score+' ұпай)'+(d.warm?'\n(MQ-2 әлі қызып жатыр)':'');
+}
+var KB=[
+ {k:['қазір','жағдай','көрсеткіш','қанша','температура қанша','live','онлайн'],f:nowText},
+ {k:['bme280','bme','температур','ылғал','қысым','өлшей'],a:'BME280 — шағын цифрлық сенсор. Ол үш көрсеткішті өлшейді:\n🌡 ауа температурасы (°C)\n💧 салыстырмалы ылғалдылық (%)\n⏱ атмосфералық қысым (hPa).\nРаспберри Pi-ға I2C арқылы (3.3V, GND, SDA, SCL) қосылады. Ыстық әрі құрғақ ауа өрт қаупін арттырады.'},
+ {k:['mq-2','mq2','mq','түтін','газ','жанғыш'],a:'MQ-2 — газ сенсоры. Ол ауадағы түтінді және жанғыш газдарды (пропан, метан, сутегі) сезеді. Модульдегі көк бұранда сезімталдықты реттейді. Түтін анықталса, DO шығысы сигнал береді, ал Raspberry Pi оны GPIO17 арқылы оқиды. Жаңа датчик алғашқы минуттарда қызуы керек.'},
+ {k:['ұпай','есепте','деңгей','қауіп қалай','формула'],a:'Қауіп ұпаймен есептеледі:\n🌡 >30°C → +1, >40°C → +2\n💧 <35% → +1, <20% → +2\n💨 түтін бар → +4\n\nДеңгейлер:\n🟢 0–1 ҚАЛЫПТЫ\n🟡 2–3 НАЗАР\n🟠 4–5 ҚАУІПТІ\n🔴 6+ ӨРТ ҚАУПІ!'},
+ {k:['дрон','ұш'],a:'Дрон сенсорлық қорапшаны орманның қол жетуі қиын, қауіпті нүктелеріне тез әрі қауіпсіз жеткізеді. Бұл таулы аймақтарда да бақылау жүргізуге мүмкіндік береді. Бұл — жобаның келесі кезеңі.'},
+ {k:['raspberry','pi','қосыл','распберри','ip','сайт'],a:'Raspberry Pi 4 — жобаның «миы». Ол:\n1) BME280 мен MQ-2 сенсорларынан 5 секунд сайын мәлімет алады;\n2) қауіп деңгейін есептейді және CSV файлына жазады;\n3) осы сайтты өзі ашып береді: http://raspberrypi.local:5000\nКомпьютер мен Pi бір Wi-Fi желісінде болуы керек.'},
+ {k:['telegram','телеграм','ескерту','хабар'],a:'Қауіп деңгейі 🟠 ҚАУІПТІ немесе 🔴 ӨРТ ҚАУПІ! болғанда Raspberry Pi Telegram-бот арқылы жауапты адамдарға бірден хабарлама жібереді. Жағдай қалпына келгенде де хабар береді.'},
+ {k:['алдын','сақтан','қорға','ереже'],a:'Орман өртінің алдын алу жолдары:\n• Орманда от жақпау, темекі тастамау\n• Қоқысты, әсіресе шыны мен пластикті қалдырмау\n• Құрғақ шөпті өртемеу\n• Қауіпті аймақтарды сенсорлармен үздіксіз бақылау\n• Түтін көрсеңіз, бірден 112-ге хабарлау.'},
+ {k:['ai','жасанды','интеллект','талда','болжа'],a:'Жасанды интеллект сенсор деректерін талдайды: температура жоғары, ылғалдылық төмен және түтін бар болса, өрт қаупі жоғары деп ескертеді. Нәтиже төрт деңгейде шығады: 🟢 қалыпты, 🟡 назар, 🟠 қауіпті, 🔴 өрт қаупі.'},
+ {k:['команда','oyan','оян','тәлімгер','кім','байқау','future'],a:'Біз OYAN командасымыз, Future Edition байқауына қатысамыз. Тәлімгерлеріміз: Bakkeldi Karagol және Kenzhebek Sultan.'},
+ {k:['австралия','қытай','сычуань','абай','қазақстан','статист','мысал'],a:'Мысалдар:\n🇨🇳 Қытай, 2019 — Сычуань өлкесіндегі өртте 30 өрт сөндіруші қаза тапты.\n🇦🇺 Австралия, 2019–2020 — «Қара жаз» өрттерінде 18 млн гектардан астам жер өртенді.\n🇰🇿 Қазақстан, 2023 — Абай облысындағы өрттер адам шығынына әкелді.'},
+ {k:['болашақ','жоспар','дамыт'],a:'Болашақ жоспарлар: көп сенсорлы желі құру, дронмен жеткізу, күн батареясымен жұмыс істейтін қорапшалар, орманшыларға арналған мобильді қосымша және өртті болжайтын AI моделі.'},
+ {k:['forestcare','жоба','не істей','мақсат'],a:'ForestCare — орман өртін ерте анықтау жобасы. BME280 температураны, ылғалдылықты және қысымды, MQ-2 түтінді өлшейді. Raspberry Pi деректерді жинап, қауіп деңгейін есептейді, сайтқа көрсетеді және Telegram арқылы ескертеді.'},
+ {k:['сәлем','салем','привет','hello','hi'],a:'Сәлем! 🌲 ForestCare туралы сұрағыңызды қойыңыз: сенсорлар, Raspberry Pi, қазіргі көрсеткіштер немесе өрттің алдын алу туралы.'},
+ {k:['рахмет','рақмет','спасибо','thanks'],a:'Оқасы жоқ! Тағы сұрақтарыңыз болса, қоя беріңіз. 🌲'}
+];
+function local(q){
+  var s=q.toLowerCase(),best=null,sc=0;
+  KB.forEach(function(e){var n=0;e.k.forEach(function(w){if(s.indexOf(w)>=0)n+=w.length});if(n>sc){sc=n;best=e}});
+  if(!best)return 'Мен ForestCare жобасы, орман өрттері, сенсорлар және Raspberry Pi туралы сұрақтарға жауап бере аламын. Мысалы: «Қазір жағдай қандай?» деп сұраңыз.';
+  return best.f?best.f():best.a;
+}
+function send(q){
+  if(busy||!q)return;
+  if(!smp){add('me',q);var lb=add('bot','…');setTimeout(function(){lb.textContent=local(q);$('log').scrollTop=1e9},350);return}
+  busy=true;add('me',q);
+  var ctx='\n\nҚазіргі нақты деректер: '+(latest?JSON.stringify({t:latest.t,h:latest.h,p:latest.p,smoke:latest.smoke,score:latest.score,level:latest.level}):'Raspberry Pi қосылмаған, деректер жоқ.');
+  hist.push({role:'user',content:(hist.length?'':SYS)+ctx+'\n\nСұрақ: '+q});
+  var b=add('bot','…');
+  smp(hist.slice(-12),{cache:false,onText:function(r){b.textContent=r.text;$('log').scrollTop=1e9}})
+   .then(function(r){b.textContent=r.text;hist.push({role:'assistant',content:r.text})})
+   .catch(function(){hist.pop();b.textContent=local(q)})
+   .then(function(){busy=false});
+}
+try{if(window.claude&&claude.use){claude.use('sample').then(function(s){smp=s}).catch(function(){smp=null})}}catch(e){}
+$('qb').onclick=function(){var v=$('q').value.trim();$('q').value='';send(v)};
+$('q').onkeydown=function(e){if(e.key==='Enter')$('qb').click()};
+document.querySelectorAll('.chip').forEach(function(c){c.onclick=function(){send(c.textContent)}});
+})();
+</script>
+</body>
+</html>
