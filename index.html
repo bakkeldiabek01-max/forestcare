@@ -137,6 +137,8 @@ h2{font-size:clamp(1.7rem,4.6vw,2.5rem);line-height:1.2;margin-bottom:8px;backgr
 
 .empty{margin-top:16px;text-align:center;color:var(--mut);padding:26px 14px;border:1px dashed #d4af3744;border-radius:18px}
 .empty b{color:var(--white);display:block;margin-bottom:4px}
+.empty a:not(.btn){color:var(--gold2)}
+.empty .btn{margin-top:14px}
 .conn{margin-top:14px}
 .conn summary{cursor:pointer;color:var(--gold2);font-size:.9rem;list-style:none}
 .conn summary::-webkit-details-marker{display:none}
@@ -283,7 +285,7 @@ footer b{color:var(--gold2)}
       </div>
     </div>
 
-    <div class="empty" id="emptyBox"><b>📡 Сенсорлар деректері әзірге жоқ</b>Raspberry Pi қосылғанда температура, ылғалдылық, қысым және түтін мәндері осы жерде пайда болады.</div>
+    <div class="empty" id="emptyBox"><b id="emptyT">📡 Сенсорлар деректері әзірге жоқ</b><span id="emptyD">Raspberry Pi қосылғанда температура, ылғалдылық, қысым және түтін мәндері осы жерде пайда болады.</span></div>
 
     <details class="conn" id="connBox">
       <summary>Raspberry Pi мекенжайы</summary>
@@ -472,10 +474,17 @@ $('ip').onkeydown=function(e){if(e.key==='Enter')connect($('ip').value)};
 var servedByPi=/^https?:$/.test(location.protocol)&&location.port==='5000';
 if(servedByPi){CLOUD='';base=location.origin;$('connBox').hidden=true;setStatus('wait','Қосылуда…');poll();timer=setInterval(poll,3000)}
 else if(CLOUD){$('connBox').hidden=true;setStatus('wait','Қосылуда…');pollCloud();timer=setInterval(pollCloud,5000)}
+else if(location.protocol==='https:'){
+  // Интернеттегі (https) бет жергілікті Pi-ға тікелей қосыла алмайды — браузер қауіпсіздігі
+  $('connBox').hidden=true;
+  setStatus('wait','Бұлттағы байланыс күтілуде');
+  $('emptyT').textContent='📡 Тірі деректер бұлт арқылы келеді';
+  $('emptyD').innerHTML='Raspberry Pi деректерді бұлттағы дерекқорға жібергенде, температура, ылғалдылық, қысым және түтін мәндері осы жерде автоматты түрде пайда болады.<br>Pi-мен бір Wi-Fi желісінде болсаңыз, тірі бақылауды қазір-ақ аша аласыз:<br><a class="btn" href="http://raspberrypi.local:5000/#monitor">📡 raspberrypi.local:5000 ашу</a>';
+}
 else{
   var saved=null;try{saved=localStorage.getItem('oyan_pi')}catch(e){}
   $('ip').value=saved||'http://raspberrypi.local:5000';
-  if(location.protocol!=='https:')connect($('ip').value);else $('connBox').open=true;
+  connect($('ip').value);
 }
 
 /* ---------- AI assistant ---------- */
