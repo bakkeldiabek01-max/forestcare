@@ -114,6 +114,53 @@ def cloud_loop():
         time.sleep(INTERVAL)
 
 
+NTFY_TOPIC = str(CFG.get('ntfy_topic', 'oyan-forestcare-6d708241')).strip()
+CLOUDFLARED = os.path.join(BASE_DIR, 'cloudflared')
+TUNNEL = {'url': None}
+
+
+def publish_url(url):
+    try:
+        requests.post(f'https://ntfy.sh/{NTFY_TOPIC}',
+                      data=json.dumps({'url': url, 'ts': int(time.time())}), timeout=10)
+        print('Tunnel URL published:', url, flush=True)
+    except Exception as e:
+        print('ntfy error:', e, flush=True)
+
+
+def tunnel_loop():
+    """Cloudflare Tunnel: Pi-ға интернеттен ашылатын https мекенжай береді
+    және оны сайт табуы үшін ntfy.sh арнасына жариялайды."""
+    import subprocess, re
+    if not os.path.exists(CLOUDFLARED):
+        print('Tunnel: cloudflared not found, skipped', flush=True)
+        return
+    pat = re.compile(r'https://[a-z0-9-]+\.trycloudflare\.com')
+    while True:
+        try:
+            proc = subprocess.Popen([CLOUDFLARED, 'tunnel', '--no-autoupdate', '--url', f'http://localhost:{PORT}'],
+                                    stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+            for line in proc.stdout:
+                m = pat.search(line)
+                if m and m.group(0) != TUNNEL['url'] and not m.group(0).startswith('https://api.'):
+                    TUNNEL['url'] = m.group(0)
+                    time.sleep(3)
+                    publish_url(TUNNEL['url'])
+            proc.wait()
+        except Exception as e:
+            print('Tunnel error:', e, flush=True)
+        TUNNEL['url'] = None
+        time.sleep(15)
+
+
+def republish_loop():
+    """ntfy.sh хабарламаны 12 сағат сақтайды — мекенжайды 6 сағат сайын қайта жариялаймыз."""
+    while True:
+        time.sleep(6 * 3600)
+        if TUNNEL['url']:
+            publish_url(TUNNEL['url'])
+
+
 def send_tg(text):
     if not TG_TOKEN or not TG_CHAT_ID:
         return
@@ -133,7 +180,7 @@ def risk_level(t, h, smoke):
     if smoke: score += 4
     if score >= 6: return score, 'ӨРТ ҚАУПІ!'
     if score >= 4: return score, 'ҚАУІПТІ'
-    if score >= 2: return score, 'НАЗАР'
+    if score >= 2 or t > 30: return score, 'НАЗАР'   # температура көтерілсе — кемінде орташа
     return score, 'ҚАЛЫПТЫ'
 
 
@@ -156,6 +203,8 @@ def main():
     load_history()
     start_web()
     threading.Thread(target=cloud_loop, daemon=True).start()
+    threading.Thread(target=tunnel_loop, daemon=True).start()
+    threading.Thread(target=republish_loop, daemon=True).start()
     print('Cloud:', FIREBASE_URL or 'off', '| Telegram:', 'on' if TG_TOKEN and TG_CHAT_ID else 'off', flush=True)
 
     bme = adafruit_bme280.Adafruit_BME280_I2C(board.I2C(), address=BME_ADDR)

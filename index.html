@@ -109,7 +109,7 @@ h2{font-size:clamp(1.7rem,4.6vw,2.5rem);line-height:1.2;margin-bottom:8px;backgr
 .risk.l0{border-color:#4fd88466}.risk.l0 h4{color:var(--ok)}
 .risk.l1{border-color:#f2c94c77}.risk.l1 h4{color:var(--warn)}
 .risk.l2{border-color:#ff9a3c99}.risk.l2 h4{color:var(--orange)}
-.risk.l3{border-color:var(--red);box-shadow:0 0 0 1px var(--red),0 0 40px #ff4d4d44;animation:alarm 1.2s infinite}.risk.l3 h4{color:var(--red)}
+.risk.l3{border-color:var(--red)}.risk.l3 h4{color:var(--red)}
 @keyframes alarm{50%{box-shadow:0 0 0 1px var(--red),0 0 10px #ff4d4d22}}
 
 .meters{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-top:14px}
@@ -149,6 +149,21 @@ input:focus{border-color:var(--gold)}
 .note{color:var(--mut);font-size:.84rem;margin-top:8px}
 .note code{background:#ffffff12;padding:1px 6px;border-radius:6px;color:var(--gold2)}
 
+/* ALARM */
+.alarm-bar{position:fixed;left:0;right:0;top:calc(52px + env(safe-area-inset-top,0px));z-index:29;display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 16px;text-decoration:none;color:#fff;font-weight:800;letter-spacing:.3px;background:#b3261e;box-shadow:0 6px 24px #ff4d4d66;animation:barBlink 1s steps(1) infinite}
+.alarm-bar[hidden]{display:none}
+.alarm-bar small{font-weight:600;opacity:.9}
+.alarm-bar.fire{animation-duration:.6s}
+@keyframes barBlink{0%{background:#b3261e}50%{background:#ff4d4d}}
+.dash.alarm{border-color:var(--red);animation:dashBlink 1s ease-in-out infinite}
+.dash.alarm.fire{animation-duration:.6s}
+@keyframes dashBlink{0%,100%{box-shadow:0 0 0 1px #ff4d4d66,0 20px 60px #0007}50%{box-shadow:0 0 0 3px var(--red),0 0 70px #ff4d4daa}}
+.dash.alarm .risk,.dash.alarm .m,.dash.alarm .ch,.dash.alarm .tl{border-color:var(--red);animation:cardBlink 1s ease-in-out infinite}
+.dash.alarm.fire .risk,.dash.alarm.fire .m,.dash.alarm.fire .ch,.dash.alarm.fire .tl{animation-duration:.6s}
+@keyframes cardBlink{0%,100%{background:#05160d}50%{background:#6b1010}}
+.dash.alarm .m .v{color:#fff}
+.dash.alarm .risk h4{color:#ff6b6b}
+
 /* FUTURE */
 ul.fut{list-style:none;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
 ul.fut li{background:linear-gradient(160deg,var(--card),var(--bg2));border:1px solid var(--line);padding:16px 18px;border-radius:16px;display:flex;gap:12px;align-items:flex-start}
@@ -178,11 +193,12 @@ footer b{color:var(--gold2)}
   .risk .why{justify-content:center}
   .final{grid-template-columns:1fr;text-align:center;justify-items:center}
   .dash{padding:16px}
+  .alarm-bar{flex-direction:column;gap:0;font-size:.95rem;padding:8px 12px}
   .m{padding:14px}
   .m .v{font-size:1.7rem}
   section{padding-left:16px;padding-right:16px}
 }
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.dash.alarm .m,.dash.alarm .risk{background:#4a0d0d}}
 </style>
 </head>
 <body>
@@ -194,6 +210,7 @@ footer b{color:var(--gold2)}
   </div>
   <a class="live" id="navLive" href="#monitor"><i></i><span id="navLiveT">Офлайн</span></a>
 </nav>
+<a class="alarm-bar" id="alarmBar" href="#monitor" hidden><span id="alarmT">🔥 ӨРТ ҚАУПІ!</span><small id="alarmS"></small></a>
 
 <section id="home">
   <svg class="f" viewBox="0 0 800 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><g fill="#0b3a20"><path d="M0 300V190l40-90 40 90 30-60 40 100 40-130 45 140 35-80 45 110 40-150 45 160 40-90 40 100 45-140 40 120 40-70 45 110 40-120 40 140 20-60V300z"/></g><g fill="#12552e"><path d="M0 300V230l30-70 30 70 30-40 35 80 35-110 35 110 30-60 40 90 35-120 40 130 35-70 40 80 35-100 40 100 35-60 40 90 35-110 35 100 30-50V300z"/></g><g fill="#05160d"><path d="M0 300V260l25-50 25 50 30-30 30 60 30-80 30 80 30-40 30 60 30-90 30 90 30-50 30 50 30-70 30 70 30-40 30 50 30-60 30 60 30-30 30 40V300z"/></g></svg>
@@ -344,6 +361,7 @@ if('IntersectionObserver' in window){
 /* ---------- Live monitor ---------- */
 var LV={'ҚАЛЫПТЫ':0,'НАЗАР':1,'ҚАУІПТІ':2,'ӨРТ ҚАУПІ!':3};
 var LVC=['var(--ok)','var(--warn)','var(--orange)','var(--red)'];
+var LVNAME=['ҚАЛЫПТЫ','НАЗАР','ҚАУІПТІ','ӨРТ ҚАУПІ!'];
 var LVHEX=['#4fd884','#f2c94c','#ff9a3c','#ff4d4d'];
 var LVTXT=[
  'Жағдай тыныш. Сенсорлар қалыпты мәндерді көрсетіп тұр.',
@@ -358,15 +376,24 @@ function setLive(on,txt){
   $('navLive').className='live'+(on?' on':'');$('navLiveT').textContent=on?'Онлайн':'Офлайн';
   $('heroLive').className='hero-live'+(on?' on':'');$('heroLiveT').innerHTML=txt;
 }
+function setAlarm(lv,d){
+  var on=lv>=2, bar=$('alarmBar'), dash=document.querySelector('.dash');
+  dash.classList.toggle('alarm',on);dash.classList.toggle('fire',lv>=3);
+  bar.hidden=!on;bar.classList.toggle('fire',lv>=3);
+  if(on){
+    $('alarmT').textContent=(lv>=3?'🔴 ӨРТ ҚАУПІ!':'🟠 ҚАУІПТІ!');
+    $('alarmS').textContent='🌡 '+d.t.toFixed(1)+'°C · 💧 '+d.h.toFixed(0)+'% · 💨 '+(d.smoke?'түтін БАР':'түтін жоқ');
+  }
+}
 function offline(msg){
-  latest=null;
+  latest=null;setAlarm(0);
   setStatus('',msg||'Raspberry Pi қосылмаған');
   $('liveBox').hidden=true;$('emptyBox').hidden=false;$('upd').textContent='';
   setLive(false,'Сенсорлар қосылуын күтуде…');
 }
 function factors(d){
   var f=[];
-  if(d.t>40)f.push(['🌡 Қатты ыстық +2',1]);else if(d.t>30)f.push(['🌡 Ыстық +1',1]);else f.push(['🌡 Температура қалыпты',0]);
+  if(d.t>40)f.push(['🌡 Қатты ыстық +2',1]);else if(d.t>30)f.push(['🌡 Температура көтерілді +1',1]);else f.push(['🌡 Температура қалыпты',0]);
   if(d.h<20)f.push(['💧 Өте құрғақ +2',1]);else if(d.h<35)f.push(['💧 Құрғақ ауа +1',1]);else f.push(['💧 Ылғалдылық қалыпты',0]);
   f.push(d.smoke?['💨 Түтін бар +4',1]:['💨 Түтін жоқ',0]);
   return f;
@@ -394,7 +421,7 @@ function show(d,stale){
   }
   latest=d;lastOk=(CLOUD&&d.ts)?d.ts*1000:Date.now();fails=0;
   $('liveBox').hidden=false;$('emptyBox').hidden=true;
-  var lv=LV[d.level];if(lv===undefined)lv=0;
+  var lv=LV[d.level];if(lv===undefined)lv=0;d.level=LVNAME[lv];
   if(stale){
     setStatus('','Raspberry Pi офлайн');
     setLive(false,'<b>Pi офлайн</b> · соңғы дерек: '+hhmm(d.ts)+' · '+d.t.toFixed(1)+'°C');
@@ -410,7 +437,10 @@ function show(d,stale){
   $('gArc').style.stroke=LVHEX[lv];
   $('risk').className='risk l'+lv;
   $('lvl').textContent=(['🟢','🟡','🟠','🔴'][lv])+' '+d.level;
-  $('lvlTxt').textContent=d.warm?'MQ-2 датчигі қызып жатыр — түтін көрсеткіші бірнеше минуттан соң дәлірек болады.':LVTXT[lv];
+  var txt=LVTXT[lv];
+  if(lv===1&&d.t>30&&(d.score||0)<2)txt='Температура 30°C-тан асты. Бақылауды күшейткен жөн.';
+  $('lvlTxt').textContent=d.warm?'MQ-2 датчигі қызып жатыр — түтін көрсеткіші бірнеше минуттан соң дәлірек болады.':txt;
+  setAlarm(stale?0:lv,d);
   $('why').innerHTML=factors(d).map(function(f){return '<span class="'+(f[1]?'hot':'')+'" style="'+(f[1]?'color:'+LVHEX[Math.max(lv,1)]:'')+'">'+f[0]+'</span>'}).join('');
 
   // meters
@@ -433,7 +463,7 @@ function show(d,stale){
   $('ctR').textContent=rt?rt[0].toFixed(1)+'…'+rt[1].toFixed(1)+' °C':'—';
   $('chR').textContent=rh?rh[0].toFixed(0)+'…'+rh[1].toFixed(0)+' %':'—';
   var tl=hs.slice(-90);
-  $('tlBar').innerHTML=tl.map(function(r){var l=LV[r.level];if(l===undefined)l=0;return '<i style="background:'+LVC[l]+'" title="'+new Date(r.ts*1000).toLocaleTimeString()+' · '+r.level+'"></i>'}).join('');
+  $('tlBar').innerHTML=tl.map(function(r){var l=LV[r.level];if(l===undefined)l=0;return '<i style="background:'+LVC[l]+'" title="'+new Date(r.ts*1000).toLocaleTimeString()+' · '+LVNAME[l]+'"></i>'}).join('');
   if(tl.length>1){var mins=Math.round((tl[tl.length-1].ts-tl[0].ts)/60);$('tlSpan').textContent='· соңғы '+(mins<1?'1':mins)+' минут'}
 }
 function tick(){
@@ -444,6 +474,7 @@ function poll(){
   if(!base)return;
   fetch(base+'/data',{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(show).catch(function(){
     fails++;
+    if(TOPIC&&!servedByPi&&fails>=3){clearInterval(timer);base=null;noPi();discTimer=setTimeout(discover,15000);return}
     if(fails>=3||!latest)offline('Raspberry Pi-ға қосылу мүмкін болмады');
   });
 }
@@ -459,6 +490,22 @@ function pollCloud(){
     show(d,(Date.now()/1000-(d.ts||0))>60);
   }).catch(function(){fails++;if(fails>=3||!latest)offline('Бұлттағы дерекқорға қосылу мүмкін болмады')});
 }
+var TOPIC=(window.OYAN_TOPIC||'').replace(/[^A-Za-z0-9_-]/g,''),discTimer=null;
+function noPi(){
+  offline('Raspberry Pi қазір желіде емес');
+  $('emptyT').textContent='📡 Raspberry Pi қазір желіде емес';
+  $('emptyD').textContent='Pi қосылып, интернетке шыққанда температура, ылғалдылық, қысым және түтін мәндері осы жерде өздігінен пайда болады. Бетті жаңартудың қажеті жоқ.';
+}
+function discover(){
+  clearTimeout(discTimer);setStatus('wait','Raspberry Pi іздеуде…');
+  fetch('https://ntfy.sh/'+TOPIC+'/json?poll=1&since=12h',{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(txt){
+    var url=null;
+    txt.split('\n').forEach(function(line){try{var m=JSON.parse(line);var o=JSON.parse(m.message);if(o&&/^https:\/\/[a-z0-9-]+\.trycloudflare\.com$/.test(o.url))url=o.url}catch(e){}});
+    if(!url){noPi();discTimer=setTimeout(discover,30000);return}
+    base=url;fails=0;clearInterval(timer);
+    poll();timer=setInterval(poll,3000);
+  }).catch(function(){noPi();discTimer=setTimeout(discover,30000)});
+}
 function connect(u){
   u=(u||'').trim();if(!u)return;
   if(!/^https?:\/\//.test(u))u='http://'+u;
@@ -471,15 +518,13 @@ $('cb').onclick=function(){connect($('ip').value)};
 $('ip').onkeydown=function(e){if(e.key==='Enter')connect($('ip').value)};
 
 // Auto-connect: page served from the Pi itself → same origin
-var servedByPi=/^https?:$/.test(location.protocol)&&location.port==='5000';
+var servedByPi=/^https?:$/.test(location.protocol)&&(location.port==='5000'||/\.trycloudflare\.com$/.test(location.hostname));
 if(servedByPi){CLOUD='';base=location.origin;$('connBox').hidden=true;setStatus('wait','Қосылуда…');poll();timer=setInterval(poll,3000)}
 else if(CLOUD){$('connBox').hidden=true;setStatus('wait','Қосылуда…');pollCloud();timer=setInterval(pollCloud,5000)}
-else if(location.protocol==='https:'){
-  // Интернеттегі (https) бет жергілікті Pi-ға тікелей қосыла алмайды — браузер қауіпсіздігі
+else if(TOPIC){
+  // Pi өзінің қауіпсіз (https) туннель мекенжайын ntfy.sh арқылы жариялайды — сайт оны тауып, деректерді осы беттің ішінде көрсетеді
   $('connBox').hidden=true;
-  setStatus('wait','Бұлттағы байланыс күтілуде');
-  $('emptyT').textContent='📡 Тірі деректер бұлт арқылы келеді';
-  $('emptyD').innerHTML='Raspberry Pi деректерді бұлттағы дерекқорға жібергенде, температура, ылғалдылық, қысым және түтін мәндері осы жерде автоматты түрде пайда болады.<br>Pi-мен бір Wi-Fi желісінде болсаңыз, тірі бақылауды қазір-ақ аша аласыз:<br><a class="btn" href="http://raspberrypi.local:5000/#monitor">📡 raspberrypi.local:5000 ашу</a>';
+  discover();
 }
 else{
   var saved=null;try{saved=localStorage.getItem('oyan_pi')}catch(e){}
@@ -488,7 +533,7 @@ else{
 }
 
 /* ---------- AI assistant ---------- */
-var SYS="Сен ForestCare жобасының AI көмекшісісің. Тек қазақ тілінде, қысқа және түсінікті жауап бер. Команда: OYAN, Future Edition байқауына қатысады. Тәлімгерлер: Bakkeldi Karagol және Kenzhebek Sultan. Жоба: орман өртін ерте анықтау жүйесі. Raspberry Pi 4-ке екі сенсор қосылған: BME280 (температура, ылғалдылық, қысым; I2C арқылы) және MQ-2 (түтін мен жанғыш газдар; цифрлық DO шығысы GPIO17-ге). Pi әр 5 секунд сайын өлшейді. Қауіп ұпайы: температура >30°C +1, >40°C +2; ылғалдылық <35% +1, <20% +2; түтін +4. Деңгейлер: 0–1 ҚАЛЫПТЫ, 2–3 НАЗАР, 4–5 ҚАУІПТІ, 6+ ӨРТ ҚАУПІ!. Қауіп кезінде Telegram арқылы ескерту жіберіледі. Болашақта дрон сенсорлық қорапшаны орманға жеткізеді. Ешқашан өлшем сандарын ойдан шығарма — тек төменде берілген нақты деректерді қолдан. Жобаға қатыссыз сұрақтарға сыпайы түрде тек осы тақырыпта көмектесе алатыныңды айт.";
+var SYS="Сен ForestCare жобасының AI көмекшісісің. Тек қазақ тілінде, қысқа және түсінікті жауап бер. Команда: OYAN, Future Edition байқауына қатысады. Тәлімгерлер: Bakkeldi Karagol және Kenzhebek Sultan. Жоба: орман өртін ерте анықтау жүйесі. Raspberry Pi 4-ке екі сенсор қосылған: BME280 (температура, ылғалдылық, қысым; I2C арқылы) және MQ-2 (түтін мен жанғыш газдар; цифрлық DO шығысы GPIO17-ге). Pi әр 5 секунд сайын өлшейді. Қауіп ұпайы: температура >30°C +1, >40°C +2; ылғалдылық <35% +1, <20% +2; түтін +4. Деңгейлер: 0–1 ҚАЛЫПТЫ, 2–3 НАЗАР (температура 30°C-тан асса, деңгей кемінде НАЗАР болады), 4–5 ҚАУІПТІ, 6+ ӨРТ ҚАУПІ!. Қауіп кезінде Telegram арқылы ескерту жіберіледі. Болашақта дрон сенсорлық қорапшаны орманға жеткізеді. Ешқашан өлшем сандарын ойдан шығарма — тек төменде берілген нақты деректерді қолдан. Жобаға қатыссыз сұрақтарға сыпайы түрде тек осы тақырыпта көмектесе алатыныңды айт.";
 var hist=[],busy=false,smp=null;
 function add(c,t){var d=document.createElement('div');d.className='msg '+c;d.textContent=t;$('log').appendChild(d);$('log').scrollTop=1e9;return d}
 function nowText(){
@@ -500,7 +545,7 @@ var KB=[
  {k:['қазір','жағдай','көрсеткіш','қанша','температура қанша','live','онлайн'],f:nowText},
  {k:['bme280','bme','температур','ылғал','қысым','өлшей'],a:'BME280 — шағын цифрлық сенсор. Ол үш көрсеткішті өлшейді:\n🌡 ауа температурасы (°C)\n💧 салыстырмалы ылғалдылық (%)\n⏱ атмосфералық қысым (hPa).\nРаспберри Pi-ға I2C арқылы (3.3V, GND, SDA, SCL) қосылады. Ыстық әрі құрғақ ауа өрт қаупін арттырады.'},
  {k:['mq-2','mq2','mq','түтін','газ','жанғыш'],a:'MQ-2 — газ сенсоры. Ол ауадағы түтінді және жанғыш газдарды (пропан, метан, сутегі) сезеді. Модульдегі көк бұранда сезімталдықты реттейді. Түтін анықталса, DO шығысы сигнал береді, ал Raspberry Pi оны GPIO17 арқылы оқиды. Жаңа датчик алғашқы минуттарда қызуы керек.'},
- {k:['ұпай','есепте','деңгей','қауіп қалай','формула'],a:'Қауіп ұпаймен есептеледі:\n🌡 >30°C → +1, >40°C → +2\n💧 <35% → +1, <20% → +2\n💨 түтін бар → +4\n\nДеңгейлер:\n🟢 0–1 ҚАЛЫПТЫ\n🟡 2–3 НАЗАР\n🟠 4–5 ҚАУІПТІ\n🔴 6+ ӨРТ ҚАУПІ!'},
+ {k:['ұпай','есепте','деңгей','қауіп қалай','формула'],a:'Қауіп ұпаймен есептеледі:\n🌡 >30°C → +1, >40°C → +2\n💧 <35% → +1, <20% → +2\n💨 түтін бар → +4\n\nДеңгейлер:\n🟢 0–1 ҚАЛЫПТЫ\n🟡 2–3 НАЗАР (температура 30°C-тан асса да)\n🟠 4–5 ҚАУІПТІ\n🔴 6+ ӨРТ ҚАУПІ!'},
  {k:['дрон','ұш'],a:'Дрон сенсорлық қорапшаны орманның қол жетуі қиын, қауіпті нүктелеріне тез әрі қауіпсіз жеткізеді. Бұл таулы аймақтарда да бақылау жүргізуге мүмкіндік береді. Бұл — жобаның келесі кезеңі.'},
  {k:['raspberry','pi','қосыл','распберри','ip','сайт'],a:'Raspberry Pi 4 — жобаның «миы». Ол:\n1) BME280 мен MQ-2 сенсорларынан 5 секунд сайын мәлімет алады;\n2) қауіп деңгейін есептейді және CSV файлына жазады;\n3) осы сайтты өзі ашып береді: http://raspberrypi.local:5000\nКомпьютер мен Pi бір Wi-Fi желісінде болуы керек.'},
  {k:['telegram','телеграм','ескерту','хабар'],a:'Қауіп деңгейі 🟠 ҚАУІПТІ немесе 🔴 ӨРТ ҚАУПІ! болғанда Raspberry Pi Telegram-бот арқылы жауапты адамдарға бірден хабарлама жібереді. Жағдай қалпына келгенде де хабар береді.'},
