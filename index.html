@@ -149,6 +149,11 @@ input:focus{border-color:var(--gold)}
 .note{color:var(--mut);font-size:.84rem;margin-top:8px}
 .note code{background:#ffffff12;padding:1px 6px;border-radius:6px;color:var(--gold2)}
 
+/* SOUND */
+.snd{font:inherit;font-size:.85rem;font-weight:700;cursor:pointer;padding:7px 14px;border-radius:999px;border:1px solid #d4af3788;background:transparent;color:var(--gold2);min-height:36px}
+.snd:hover{background:#d4af3718}
+.snd.on{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#06190f;border-color:transparent}
+.snd:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
 /* ALARM */
 .alarm-bar{position:fixed;left:0;right:0;top:calc(52px + env(safe-area-inset-top,0px));z-index:29;display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 16px;text-decoration:none;color:#fff;font-weight:800;letter-spacing:.3px;background:#b3261e;box-shadow:0 6px 24px #ff4d4d66;animation:barBlink 1s steps(1) infinite}
 .alarm-bar[hidden]{display:none}
@@ -265,6 +270,7 @@ footer b{color:var(--gold2)}
       <h3><span class="lgimg"></span>OYAN сенсорлық станциясы</h3>
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
         <span class="upd" id="upd"></span>
+        <button class="snd" id="sndBtn" type="button" aria-pressed="false">🔕 Дыбысты қосу</button>
         <div class="st" id="st"><i></i><span id="stt">Raspberry Pi қосылмаған</span></div>
       </div>
     </div>
@@ -376,10 +382,41 @@ function setLive(on,txt){
   $('navLive').className='live'+(on?' on':'');$('navLiveT').textContent=on?'Онлайн':'Офлайн';
   $('heroLive').className='hero-live'+(on?' on':'');$('heroLiveT').innerHTML=txt;
 }
+var snd={on:false,ctx:null,lv:0,timer:null};
+try{snd.on=localStorage.getItem('oyan_sound')==='1'}catch(e){}
+function sndUI(){var b=$('sndBtn');b.classList.toggle('on',snd.on);b.setAttribute('aria-pressed',snd.on?'true':'false');b.textContent=snd.on?'🔔 Дыбыс қосулы':'🔕 Дыбысты қосу'}
+function tone(f,start,dur){
+  var c=snd.ctx,o=c.createOscillator(),g=c.createGain();
+  o.type='square';o.frequency.value=f;
+  g.gain.setValueAtTime(0.0001,start);g.gain.exponentialRampToValueAtTime(0.25,start+0.02);g.gain.exponentialRampToValueAtTime(0.0001,start+dur);
+  o.connect(g);g.connect(c.destination);o.start(start);o.stop(start+dur+0.02);
+}
+function siren(){
+  if(!snd.on||!snd.ctx||snd.lv<2)return;
+  var n=snd.ctx.currentTime;
+  if(snd.lv>=3){tone(1000,n,0.18);tone(750,n+0.22,0.18);tone(1000,n+0.44,0.18)}   // ӨРТ ҚАУПІ — жиі, жоғары
+  else{tone(880,n,0.3);tone(660,n+0.4,0.3)}                                         // ҚАУІПТІ — баяу екі дыбыс
+}
+function sndLevel(lv){
+  snd.lv=lv;clearInterval(snd.timer);snd.timer=null;
+  if(lv>=2&&snd.on&&snd.ctx){siren();snd.timer=setInterval(siren,lv>=3?800:1400)}
+}
+$('sndBtn').onclick=function(){
+  snd.on=!snd.on;
+  try{localStorage.setItem('oyan_sound',snd.on?'1':'0')}catch(e){}
+  if(snd.on){
+    try{snd.ctx=snd.ctx||new (window.AudioContext||window.webkitAudioContext)();snd.ctx.resume();tone(880,snd.ctx.currentTime,0.12)}catch(e){snd.on=false}
+  }
+  sndUI();sndLevel(snd.lv);
+};
+sndUI();
+// Браузер дыбысты тек батырма басылғаннан кейін рұқсат етеді: бұрын қосылған болса, бірінші басуда іске қосамыз
+document.addEventListener('pointerdown',function(){if(snd.on&&!snd.ctx){try{snd.ctx=new (window.AudioContext||window.webkitAudioContext)();snd.ctx.resume();sndLevel(snd.lv)}catch(e){}}},{once:true});
 function setAlarm(lv,d){
   var on=lv>=2, bar=$('alarmBar'), dash=document.querySelector('.dash');
   dash.classList.toggle('alarm',on);dash.classList.toggle('fire',lv>=3);
   bar.hidden=!on;bar.classList.toggle('fire',lv>=3);
+  if((lv>=2?lv:0)!==snd.lv)sndLevel(lv>=2?lv:0);
   if(on){
     $('alarmT').textContent=(lv>=3?'🔴 ӨРТ ҚАУПІ!':'🟠 ҚАУІПТІ!');
     $('alarmS').textContent='🌡 '+d.t.toFixed(1)+'°C · 💧 '+d.h.toFixed(0)+'% · 💨 '+(d.smoke?'түтін БАР':'түтін жоқ');
@@ -548,6 +585,7 @@ var KB=[
  {k:['ұпай','есепте','деңгей','қауіп қалай','формула'],a:'Қауіп ұпаймен есептеледі:\n🌡 >30°C → +1, >40°C → +2\n💧 <35% → +1, <20% → +2\n💨 түтін бар → +4\n\nДеңгейлер:\n🟢 0–1 ҚАЛЫПТЫ\n🟡 2–3 НАЗАР (температура 30°C-тан асса да)\n🟠 4–5 ҚАУІПТІ\n🔴 6+ ӨРТ ҚАУПІ!'},
  {k:['дрон','ұш'],a:'Дрон сенсорлық қорапшаны орманның қол жетуі қиын, қауіпті нүктелеріне тез әрі қауіпсіз жеткізеді. Бұл таулы аймақтарда да бақылау жүргізуге мүмкіндік береді. Бұл — жобаның келесі кезеңі.'},
  {k:['raspberry','pi','қосыл','распберри','ip','сайт'],a:'Raspberry Pi 4 — жобаның «миы». Ол:\n1) BME280 мен MQ-2 сенсорларынан 5 секунд сайын мәлімет алады;\n2) қауіп деңгейін есептейді және CSV файлына жазады;\n3) осы сайтты өзі ашып береді: http://raspberrypi.local:5000\nКомпьютер мен Pi бір Wi-Fi желісінде болуы керек.'},
+ {k:['дыбыс','сирена','звук'],a:'Сайтта дабыл дыбысы бар. «Ақылды бақылау» тақтасындағы «🔕 Дыбысты қосу» батырмасын бір рет басыңыз. Сонда деңгей 🟠 ҚАУІПТІ болғанда баяу сирена, ал 🔴 ӨРТ ҚАУПІ! болғанда жиі әрі қатты сирена шығады. Жағдай қалпына келгенде дыбыс өздігінен тоқтайды.'},
  {k:['telegram','телеграм','ескерту','хабар'],a:'Қауіп деңгейі 🟠 ҚАУІПТІ немесе 🔴 ӨРТ ҚАУПІ! болғанда Raspberry Pi Telegram-бот арқылы жауапты адамдарға бірден хабарлама жібереді. Жағдай қалпына келгенде де хабар береді.'},
  {k:['алдын','сақтан','қорға','ереже'],a:'Орман өртінің алдын алу жолдары:\n• Орманда от жақпау, темекі тастамау\n• Қоқысты, әсіресе шыны мен пластикті қалдырмау\n• Құрғақ шөпті өртемеу\n• Қауіпті аймақтарды сенсорлармен үздіксіз бақылау\n• Түтін көрсеңіз, бірден 112-ге хабарлау.'},
  {k:['ai','жасанды','интеллект','талда','болжа'],a:'Жасанды интеллект сенсор деректерін талдайды: температура жоғары, ылғалдылық төмен және түтін бар болса, өрт қаупі жоғары деп ескертеді. Нәтиже төрт деңгейде шығады: 🟢 қалыпты, 🟡 назар, 🟠 қауіпті, 🔴 өрт қаупі.'},
